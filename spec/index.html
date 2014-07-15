@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/vendor/mocha/mocha.css">
+    <script src="/vendor/modernizr/modernizr.js"></script>
+    <script src="/vendor/jquery/dist/jquery.js"></script>
+    <script src="/vendor/jquery-ui/ui/widget.js"></script>
+    <script src="/vendor/mocha/mocha.js"></script>
+    <script src="/vendor/chai/chai.js"></script>
+    <script src="/testem.js"></script>
+    <script>
+      mocha.setup('bdd');
+      window.expect = chai.expect;
+    </script>
+    <script src="/dist/space-frame.js"></script>
+    <script src="/.tmp/space-frame_spec.js"></script>
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <div class="space-frame" id="four_panel">
+      <div class="space-panel"></div>
+      <div class="space-panel"></div>
+      <div class="space-panel"></div>
+      <div class="space-panel"></div>
+      <div class="space-scrubber"></div>
+    </div>
+    <div class="space-frame" data-space-axis="x" id="two_panel_left_right">
+      <div class="space-panel"></div>
+      <div class="space-panel"></div>
+      <div class="space-scrubber"></div>
+    </div>
+    <div class="space-frame" data-space-axis="y" id="two_panel_top_bottom">
+      <div class="space-panel"></div>
+      <div class="space-panel"></div>
+      <div class="space-scrubber"></div>
+    </div>
+  </body>
+  <script>
+    mocha.run()
+  </script>
+</html>
+

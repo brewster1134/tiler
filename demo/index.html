@@ -2,40 +2,40 @@
 <html>
   <head>
     <title>Space Frame</title>
-    <link type="text/css" rel="stylesheet" media="all" href="../dist/space-frame.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="../dist/tiler.css"/>
     <style>
-      .space-frame .space-scrubber {
+      .tiler .space-scrubber {
         width: 50px;
         height: 50px;
         margin-left: -25px;
         margin-top: -25px;
         background: red; }
-      .space-frame .space-panel img {
+      .tiler .space-panel img {
         display: block; }
     </style>
     <script src="../vendor/modernizr/modernizr.js"></script>
     <script src="../vendor/jquery/dist/jquery.js"></script>
     <script src="../vendor/jquery-ui/ui/widget.js"></script>
-    <script type="text/javascript" src="../dist/space-frame.js"></script>
+    <script type="text/javascript" src="../dist/tiler.js"></script>
     <script>
       (function($) {
         $(window).load(function() {
-          $('.space-frame').spaceframe({position: {x: 100, y: 100}});
+          $('.tiler').spaceframe({position: {x: 100, y: 100}});
           $('button#animate').click(function() {
             var randomWidth = Math.floor(Math.random()*501);
             var randomHeight = Math.floor(Math.random()*376);
 
-            $('.space-frame').each(function(i, el) {
+            $('.tiler').each(function(i, el) {
               $(el).spaceframe('animate', randomWidth, randomHeight);
             });
           });
           $('button#refresh').click(function() {
-            $('.space-frame').each(function(i, el) {
+            $('.tiler').each(function(i, el) {
               $(el).spaceframe('refresh');
             });
           });
           $('button#destroy').click(function() {
-            $('.space-frame').each(function(i, el) {
+            $('.tiler').each(function(i, el) {
               $(el).spaceframe('destroy');
             });
           });
@@ -48,7 +48,7 @@
     <button id="refresh">Refresh</button>
     <button id="destroy">Destroy</button>
     <h1>4 Panel</h1>
-    <div class="space-frame">
+    <div class="tiler">
         <div class="space-panel"><img src="kitty.jpg" /></div>
         <div class="space-panel"><img src="kitty_red.jpg" /></div>
         <div class="space-panel"><img src="kitty_green.jpg" /></div>
@@ -56,13 +56,13 @@
         <div class="space-scrubber"></div>
     </div>
     <h1>2 Panel Left/Right</h1>
-    <div class="space-frame" data-space-axis="x">
+    <div class="tiler" data-space-axis="x">
         <div class="space-panel"><img src="kitty_red.jpg" /></div>
         <div class="space-panel"><img src="kitty_blue.jpg" /></div>
         <div class="space-scrubber"></div>
     </div>
     <h1>2 Panel Top/Bottom</h1>
-    <div class="space-frame" data-space-axis="y">
+    <div class="tiler" data-space-axis="y">
         <div class="space-panel"><img src="kitty_green.jpg" /></div>
         <div class="space-panel"><img src="kitty_blue.jpg" /></div>
         <div class="space-scrubber"></div>

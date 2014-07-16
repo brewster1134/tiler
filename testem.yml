@@ -1,9 +1,9 @@
 test_page: spec/index.html
-before_tests: coffee -o dist/ -c src/space-frame.coffee && coffee -o .tmp/ -c spec/space-frame_spec.coffee && bundle exec sass src/space-frame.sass dist/space-frame.css
+before_tests: coffee -o dist/ -c src/tiler.coffee && coffee -o .tmp/ -c spec/tiler_spec.coffee && bundle exec sass src/tiler.sass dist/tiler.css && bundle exec sass spec/tiler_spec.sass .tmp/tiler_spec.css
 src_files:
-  - src/space-frame.coffee
-  - src/space-frame.sass
-  - spec/space-frame_spec.coffee
+  - src/tiler.coffee
+  - src/tiler.sass
+  - spec/tiler_spec.coffee
   - spec/index.html
 serve_files:
   - .tmp/*.js

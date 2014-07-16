@@ -1,71 +1,66 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Space Frame</title>
+    <title>Tiler</title>
     <link type="text/css" rel="stylesheet" media="all" href="../dist/tiler.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="tiler_demo.css"/>
     <style>
-      .tiler .space-scrubber {
-        width: 50px;
-        height: 50px;
-        margin-left: -25px;
-        margin-top: -25px;
-        background: red; }
-      .tiler .space-panel img {
-        display: block; }
     </style>
-    <script src="../vendor/modernizr/modernizr.js"></script>
-    <script src="../vendor/jquery/dist/jquery.js"></script>
-    <script src="../vendor/jquery-ui/ui/widget.js"></script>
-    <script type="text/javascript" src="../dist/tiler.js"></script>
-    <script>
-      (function($) {
-        $(window).load(function() {
-          $('.tiler').spaceframe({position: {x: 100, y: 100}});
-          $('button#animate').click(function() {
-            var randomWidth = Math.floor(Math.random()*501);
-            var randomHeight = Math.floor(Math.random()*376);
 
-            $('.tiler').each(function(i, el) {
-              $(el).spaceframe('animate', randomWidth, randomHeight);
-            });
-          });
-          $('button#refresh').click(function() {
-            $('.tiler').each(function(i, el) {
-              $(el).spaceframe('refresh');
-            });
-          });
-          $('button#destroy').click(function() {
-            $('.tiler').each(function(i, el) {
-              $(el).spaceframe('destroy');
-            });
-          });
-        });
-      })(jQuery);
-    </script>
+    <script src="../vendor/modernizr/modernizr.js"></script>
   </head>
   <body>
-    <button id="animate">Animate</button>
-    <button id="refresh">Refresh</button>
-    <button id="destroy">Destroy</button>
-    <h1>4 Panel</h1>
-    <div class="tiler">
-        <div class="space-panel"><img src="kitty.jpg" /></div>
-        <div class="space-panel"><img src="kitty_red.jpg" /></div>
-        <div class="space-panel"><img src="kitty_green.jpg" /></div>
-        <div class="space-panel"><img src="kitty_blue.jpg" /></div>
-        <div class="space-scrubber"></div>
+    <div id="columns">
+      <div class="row">
+        <button data-tiler-row="1" data-tiler-col="1">1,1</button>
+      </div>
+      <div class="row">
+        <button data-tiler-row="2" data-tiler-col="1">2,1</button>
+        <button data-tiler-row="2" data-tiler-col="2">2,2</button>
+      </div>
+      <div class="row">
+        <button data-tiler-row="3" data-tiler-col="1">3,1</button>
+      </div>
+      <div class="tiler-viewport">
+        <!-- 1,1 --> <div class="tiler" id="tile-1-1" data-tiler-active-class="slide-left"></div>
+        <!-- 2,1 --> <div class="tiler" id="tile-2-1" data-tiler-active-class="slide-right"></div>
+        <!-- 2,2 --> <div class="tiler" id="tile-2-2" data-tiler-active-class="slide-up" data-tiler-row="2"></div>
+        <!-- 3,1 --> <div class="tiler" id="tile-3-1" data-tiler-active-class="slide-down"></div>
+      </div>
     </div>
-    <h1>2 Panel Left/Right</h1>
-    <div class="tiler" data-space-axis="x">
-        <div class="space-panel"><img src="kitty_red.jpg" /></div>
-        <div class="space-panel"><img src="kitty_blue.jpg" /></div>
-        <div class="space-scrubber"></div>
-    </div>
-    <h1>2 Panel Top/Bottom</h1>
-    <div class="tiler" data-space-axis="y">
-        <div class="space-panel"><img src="kitty_green.jpg" /></div>
-        <div class="space-panel"><img src="kitty_blue.jpg" /></div>
-        <div class="space-scrubber"></div>
+
+    <div id="carousel">
+      <h4>Carousel Style</h4>
+      <div class="row">
+        <button data-tiler-row="1" data-tiler-col="1">1,1</button>
+        <button data-tiler-row="2" data-tiler-col="1">2,1</button>
+        <button data-tiler-row="3" data-tiler-col="1">3,1</button>
+        <button data-tiler-row="4" data-tiler-col="1">4,1</button>
+      </div>
+      <div class="tiler-viewport">
+        <!-- 1,1 --> <div class="tiler" id="tile-1-1" data-tiler-active-class="slide-left"></div>
+        <!-- 2,1 --> <div class="tiler" id="tile-2-1" data-tiler-active-class="slide-left"></div>
+        <!-- 3,1 --> <div class="tiler" id="tile-3-1" data-tiler-active-class="slide-left"></div>
+        <!-- 4,1 --> <div class="tiler" id="tile-4-1" data-tiler-active-class="slide-left"></div>
+      </div>
     </div>
   </body>
+
+  <script src="../vendor/jquery/dist/jquery.js"></script>
+  <script src="../vendor/jquery-ui/ui/widget.js"></script>
+  <script type="text/javascript" src="../dist/tiler.js"></script>
+  <script>
+    (function($) {
+      $(window).load(function() {
+        $('.tiler-viewport').tiler()
+
+        $('.row button').click(function() {
+          var col, row;
+          row = parseInt($(this).data('tiler-row'));
+          col = parseInt($(this).data('tiler-col'));
+          $(this).parent().siblings('.tiler-viewport').tiler('goToTile', row, col);
+        });
+      });
+    })(jQuery);
+  </script>
 </html>

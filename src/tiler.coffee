@@ -26,6 +26,7 @@
 
     _create: ->
       @grid = {}
+      @animating = false
       @$currentTile = [1,1]
       @$tiles = $(@options.tileSelector, @element)
 
@@ -42,6 +43,7 @@
 
       # return if we are already on that tile
       return if @$currentTile == [row, col]
+      return if @animating
 
       # hide all uninvolved tiles
       @$tiles.not($exitTile).not($enterTile).hide()
@@ -49,7 +51,7 @@
       # manage css classes if an one is specified
       @_transitionCss $exitTile, $enterTile
 
-      # update the current title
+      # update the current tile
       @$currentTile = [row, col]
 
       return $enterTile
@@ -123,7 +125,10 @@
       $enterTile.show()
 
       # trigger the end position
-      setTimeout ->
+      setTimeout =>
+        @animating = true
+        $exitTile.on 'transitionend', => @animating = false
+
         $enterTile.addClass enterTileFinalPosition
         $enterTile.removeClass enterTileInitialPosition
 
@@ -162,4 +167,6 @@
       currentRow = @$currentTile[0]
       currentCol = @$currentTile[1]
 
-      (row > currentRow) || (row == currentRow && col > currentCol)
+      console.log row, col, currentRow, currentCol
+
+      (row > currentRow) || (row == currentRow && col >= currentCol)

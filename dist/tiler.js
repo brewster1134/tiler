@@ -27,6 +27,7 @@
       },
       _create: function() {
         this.grid = {};
+        this.animating = false;
         this.$currentTile = [1, 1];
         return this.$tiles = $(this.options.tileSelector, this.element);
       },
@@ -40,6 +41,9 @@
         $exitTile = this.grid[this.$currentTile[0]][this.$currentTile[1]];
         $enterTile = this.grid[row][col];
         if (this.$currentTile === [row, col]) {
+          return;
+        }
+        if (this.animating) {
           return;
         }
         this.$tiles.not($exitTile).not($enterTile).hide();
@@ -96,10 +100,16 @@
           transitionDuration: $enterTile.data('tiler-transition-duration')
         });
         $enterTile.show();
-        return setTimeout(function() {
-          $enterTile.addClass(enterTileFinalPosition);
-          return $enterTile.removeClass(enterTileInitialPosition);
-        });
+        return setTimeout((function(_this) {
+          return function() {
+            _this.animating = true;
+            $exitTile.on('transitionend', function() {
+              return _this.animating = false;
+            });
+            $enterTile.addClass(enterTileFinalPosition);
+            return $enterTile.removeClass(enterTileInitialPosition);
+          };
+        })(this));
       },
       _sizeTiles: function() {
         return this.$tiles.css({
@@ -125,7 +135,8 @@
         var currentCol, currentRow;
         currentRow = this.$currentTile[0];
         currentCol = this.$currentTile[1];
-        return (row > currentRow) || (row === currentRow && col > currentCol);
+        console.log(row, col, currentRow, currentCol);
+        return (row > currentRow) || (row === currentRow && col >= currentCol);
       }
     });
   });

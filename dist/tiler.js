@@ -27,7 +27,7 @@
       },
       _create: function() {
         this.grid = {};
-        this.$currentTile = $('<div data-tiler-row="0" data-tiler-col="0"/>');
+        this.$currentTile = [1, 1];
         return this.$tiles = $(this.options.tileSelector, this.element);
       },
       _init: function() {
@@ -37,11 +37,14 @@
       },
       goToTile: function(row, col) {
         var $enterTile, $exitTile;
-        $exitTile = this.$currentTile;
+        $exitTile = this.grid[this.$currentTile[0]][this.$currentTile[1]];
         $enterTile = this.grid[row][col];
+        if (this.$currentTile === [row, col]) {
+          return;
+        }
         this.$tiles.not($exitTile).not($enterTile).hide();
         this._transitionCss($exitTile, $enterTile);
-        this.$currentTile = $enterTile;
+        this.$currentTile = [row, col];
         return $enterTile;
       },
       _transitionCss: function($exitTile, $enterTile) {
@@ -120,8 +123,8 @@
       },
       _isNavigatingForward: function(row, col) {
         var currentCol, currentRow;
-        currentRow = parseInt(this.$currentTile.data('tiler-row'));
-        currentCol = parseInt(this.$currentTile.data('tiler-col'));
+        currentRow = this.$currentTile[0];
+        currentCol = this.$currentTile[1];
         return (row > currentRow) || (row === currentRow && col > currentCol);
       }
     });

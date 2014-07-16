@@ -26,7 +26,7 @@
 
     _create: ->
       @grid = {}
-      @$currentTile = $('<div data-tiler-row="0" data-tiler-col="0"/>')
+      @$currentTile = [1,1]
       @$tiles = $(@options.tileSelector, @element)
 
     _init: ->
@@ -37,8 +37,11 @@
     # PUBLIC METHODS
     #
     goToTile: (row, col) ->
-      $exitTile = @$currentTile
+      $exitTile = @grid[@$currentTile[0]][@$currentTile[1]]
       $enterTile = @grid[row][col]
+
+      # return if we are already on that tile
+      return if @$currentTile == [row, col]
 
       # hide all uninvolved tiles
       @$tiles.not($exitTile).not($enterTile).hide()
@@ -47,7 +50,7 @@
       @_transitionCss $exitTile, $enterTile
 
       # update the current title
-      @$currentTile = $enterTile
+      @$currentTile = [row, col]
 
       return $enterTile
 
@@ -153,8 +156,10 @@
 
       @grid
 
+    # determine if we are advancing or retreating through our virtual tiles
+    #
     _isNavigatingForward: (row, col) ->
-      currentRow = parseInt(@$currentTile.data('tiler-row'))
-      currentCol = parseInt(@$currentTile.data('tiler-col'))
+      currentRow = @$currentTile[0]
+      currentCol = @$currentTile[1]
 
       (row > currentRow) || (row == currentRow && col > currentCol)

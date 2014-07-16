@@ -21,12 +21,13 @@
     return $.widget('ui.tiler', {
       widgetEventPrefix: 'tiler',
       options: {
+        initialTile: [1, 1],
         tileSelector: '.tiler',
-        initialTile: [1, 1]
+        reverseSupport: true
       },
       _create: function() {
         this.grid = {};
-        this.$currentTile = $('<div/>');
+        this.$currentTile = $('<div data-tiler-row="0" data-tiler-col="0"/>');
         return this.$tiles = $(this.options.tileSelector, this.element);
       },
       _init: function() {
@@ -34,44 +35,68 @@
         this._buildGrid();
         return this.goToTile.apply(this, this.options.initialTile);
       },
-      goToTile: function(row, col, direction) {
-        var $enterTile, $exitTile, enterTileClass;
+      goToTile: function(row, col) {
+        var $enterTile, $exitTile;
         $exitTile = this.$currentTile;
         $enterTile = this.grid[row][col];
-        enterTileClass = $enterTile.data('tiler-active-class');
         this.$tiles.not($exitTile).not($enterTile).hide();
-        $exitTile.attr('class', 'tiler exit');
+        this._transitionCss($exitTile, $enterTile);
+        this.$currentTile = $enterTile;
+        return $enterTile;
+      },
+      _transitionCss: function($exitTile, $enterTile) {
+        var col, enterTileClass, enterTileFinalPosition, enterTileInitialPosition, enterTileInitialState, exitTileFinalPosition, exitTileInitialPosition, exitTileInitialState, row;
+        enterTileClass = $enterTile.data('tiler-active-class');
+        if (!enterTileClass) {
+          return;
+        }
+        row = parseInt($enterTile.data('tiler-row'));
+        col = parseInt($enterTile.data('tiler-col'));
+        if (!this.options.reverseSupport || this._isNavigatingForward(row, col)) {
+          exitTileInitialState = 'exit';
+          exitTileInitialPosition = 'start';
+          exitTileFinalPosition = 'end';
+          enterTileInitialState = 'enter';
+          enterTileInitialPosition = 'start';
+          enterTileFinalPosition = 'end';
+        } else {
+          exitTileInitialState = 'enter';
+          exitTileInitialPosition = 'end';
+          exitTileFinalPosition = 'start';
+          enterTileInitialState = 'exit';
+          enterTileInitialPosition = 'end';
+          enterTileFinalPosition = 'start';
+        }
+        $exitTile.attr('class', "tiler " + exitTileInitialState);
         $exitTile.addClass(enterTileClass);
         $exitTile.data('tiler-transition', $exitTile.css('transition'));
         $exitTile.data('tiler-transition-duration', $exitTile.css('transition-duration'));
         $exitTile.css('transition-duration', 0);
-        $exitTile.addClass('start');
+        $exitTile.addClass(exitTileInitialPosition);
         $exitTile.css({
           transition: $exitTile.data('tiler-transition'),
           transitionDuration: $exitTile.data('tiler-transition-duration')
         });
         $exitTile.show();
         setTimeout(function() {
-          $exitTile.addClass('end');
-          return $exitTile.removeClass('start');
+          $exitTile.addClass(exitTileFinalPosition);
+          return $exitTile.removeClass(exitTileInitialPosition);
         });
-        $enterTile.attr('class', 'tiler enter');
+        $enterTile.attr('class', "tiler " + enterTileInitialState);
         $enterTile.addClass(enterTileClass);
         $enterTile.data('tiler-transition', $enterTile.css('transition'));
         $enterTile.data('tiler-transition-duration', $enterTile.css('transition-duration'));
         $enterTile.css('transition-duration', 0);
-        $enterTile.addClass('start');
+        $enterTile.addClass(enterTileInitialPosition);
         $enterTile.css({
           transition: $enterTile.data('tiler-transition'),
           transitionDuration: $enterTile.data('tiler-transition-duration')
         });
         $enterTile.show();
-        setTimeout(function() {
-          $enterTile.addClass('end');
-          return $enterTile.removeClass('start');
+        return setTimeout(function() {
+          $enterTile.addClass(enterTileFinalPosition);
+          return $enterTile.removeClass(enterTileInitialPosition);
         });
-        this.$currentTile = $enterTile;
-        return $enterTile;
       },
       _sizeTiles: function() {
         return this.$tiles.css({
@@ -92,6 +117,12 @@
           return _this.grid[row][col] = $(this);
         });
         return this.grid;
+      },
+      _isNavigatingForward: function(row, col) {
+        var currentCol, currentRow;
+        currentRow = parseInt(this.$currentTile.data('tiler-row'));
+        currentCol = parseInt(this.$currentTile.data('tiler-col'));
+        return (row > currentRow) || (row === currentRow && col > currentCol);
       }
     });
   });

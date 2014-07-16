@@ -1,7 +1,8 @@
 {
   "name": "Tiler",
   "dependencies": {
-    "jquery": "~2.1.1"
+    "jquery": "~2.1.1",
+    "jquery-ui": "~1.11.0"
   },
   "devDependencies": {
     "chai": "~1.9.1",

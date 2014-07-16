@@ -10,43 +10,111 @@
   if typeof define == 'function' && define.amd
     define [
         'jquery'
+        'widget'
       ], ($) ->
       factory $
   else
-    window.Tiler = factory $
+    factory jQuery
 ) @, ($) ->
 
-  class Tiler
-    constructor: (options) ->
+  $.widget 'ui.tiler',
+    widgetEventPrefix: 'tiler'
+    options:
+      tileSelector: '.tiler'
+      initialTile: [1,1]
+
+    _create: ->
       @grid = {}
-      @options = $.extend {},
+      @$currentTile = $('<div/>')
+      @$tiles = $(@options.tileSelector, @element)
 
-        # create default options values here
-        #
-        tileSelector: '.tiler'
+    _init: ->
+      @_sizeTiles()
+      @_buildGrid()
+      @goToTile @options.initialTile...
 
-      , options
+    # PUBLIC METHODS
+    #
+    goToTile: (row, col, direction) ->
+      $exitTile = @$currentTile
+      $enterTile = @grid[row][col]
 
-    buildGrid: ->
+      enterTileClass = $enterTile.data('tiler-active-class')
+
+      # hide all uninvolved tiles
+      @$tiles.not($exitTile).not($enterTile).hide()
+
+      # EXIT TILE
+      #
+
+      # reset
+      $exitTile.attr 'class', 'tiler exit'
+      $exitTile.addClass enterTileClass
+
+      # set enter tile start position
+      $exitTile.data 'tiler-transition', $exitTile.css('transition')
+      $exitTile.data 'tiler-transition-duration', $exitTile.css('transition-duration')
+      $exitTile.css 'transition-duration', 0
+      $exitTile.addClass 'start'
+      $exitTile.css
+        transition: $exitTile.data 'tiler-transition'
+        transitionDuration: $exitTile.data 'tiler-transition-duration'
+      $exitTile.show()
+
+      # trigger the end position
+      setTimeout ->
+        $exitTile.addClass 'end'
+        $exitTile.removeClass 'start'
+
+      # ENTER TILE
+      #
+
+      # reset
+      $enterTile.attr 'class', 'tiler enter'
+      $enterTile.addClass enterTileClass
+
+      # set enter tile start position
+      $enterTile.data 'tiler-transition', $enterTile.css('transition')
+      $enterTile.data 'tiler-transition-duration', $enterTile.css('transition-duration')
+      $enterTile.css 'transition-duration', 0
+      $enterTile.addClass 'start'
+      $enterTile.css
+        transition: $enterTile.data 'tiler-transition'
+        transitionDuration: $enterTile.data 'tiler-transition-duration'
+      $enterTile.show()
+
+      # trigger the end position
+      setTimeout ->
+        $enterTile.addClass 'end'
+        $enterTile.removeClass 'start'
+
+      # update the current title
+      @$currentTile = $enterTile
+
+      return $enterTile
+
+    # match all the tiles to the size of the viewport
+    #
+    _sizeTiles: ->
+      @$tiles.css
+        width: @element.outerWidth()
+        height: @element.outerHeight()
+
+    # calculate the virtual grid locations of all the tiles
+    #
+    _buildGrid: ->
       _this = @
-      $tiles = $('.tiler')
 
-      $tiles.each ->
-        row = null
-        col = null
+      @$tiles.each ->
+        # check if row is set explicitly, otherwise calculate it
+        row = $(@).data('tiler-row') || (Object.keys(_this.grid).length + 1)
 
-        # if coordinates are explicitly set
-        if coords = $(@).data('tiler-coords')
+        # calculate col
+        col = Object.keys(_this.grid[row] || {}).length + 1
 
-          # create array of integers
-          coords = $.map coords.split(','), (val) -> parseInt(val)
-          row = coords[0]
-          col = coords[1]
-
-        # otherwise determine coordinates based on existing tiles
-        else
-          row = Object.keys(_this.grid).length
-          col = Object.keys(_this.grid[row] || {})?.length || 0
+        # add meta data to tiles
+        $(@).data 'tiler-row', row
+        $(@).data 'tiler-col', col
 
         # add jquery object to its proper coordinate
         _this.grid[row] ||= {}

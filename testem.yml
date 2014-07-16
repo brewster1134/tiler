@@ -4,6 +4,7 @@ src_files:
   - src/tiler.coffee
   - src/tiler.sass
   - spec/tiler_spec.coffee
+  - spec/tiler_spec.sass
   - spec/index.html
 serve_files:
   - .tmp/*.js

@@ -2,17 +2,18 @@ describe 'Tiler', ->
   tiler = null
 
   before ->
-    tiler = new Tiler
-      foo: 'bar'
-
-  it 'should initialize with options', ->
-    expect(tiler).to.exist
-    expect(tiler.options.foo).to.equal 'bar'
+    tiler = $('.tiler-viewport').tiler()
 
   describe '#buildGrid', ->
     it 'should build a grid based on markup', ->
-      grid = tiler.buildGrid()
-      expect(grid[0][0]).to.exist
-      expect(grid[1][0]).to.exist
-      expect(grid[1][1]).to.exist
-      expect(grid[2][0]).to.exist
+      expect($('.tiler', tiler).eq(0).data('tiler-row')).to.equal 1
+      expect($('.tiler', tiler).eq(0).data('tiler-col')).to.equal 1
+
+      expect($('.tiler', tiler).eq(1).data('tiler-row')).to.equal 2
+      expect($('.tiler', tiler).eq(1).data('tiler-col')).to.equal 1
+
+      expect($('.tiler', tiler).eq(2).data('tiler-row')).to.equal 2
+      expect($('.tiler', tiler).eq(2).data('tiler-col')).to.equal 2
+
+      expect($('.tiler', tiler).eq(3).data('tiler-row')).to.equal 3
+      expect($('.tiler', tiler).eq(3).data('tiler-col')).to.equal 1

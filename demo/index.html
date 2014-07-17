@@ -17,7 +17,9 @@
       <button data-tiler-link-id="tile-3"></button>
       <button data-tiler-link-id="tile-4"></button>
       <div class="tiler-viewport" id="horizontal">
-        <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-active-class="slide-left"></div>
+        <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-active-class="slide-left">
+          <span id="box-1"></span><span id="box-2"></span><span id="box-3"></span>
+        </div>
         <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-active-class="slide-left"></div>
         <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-active-class="slide-left"></div>
         <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-active-class="slide-left"></div>
@@ -62,7 +64,7 @@
       $(window).load(function() {
         $('.tiler-viewport').tiler()
 
-        $('[data-tiler-title]').each(function() {
+        $('button[data-tiler-title]').each(function() {
           return $(this).text($(this).data('tiler-title'));
         });
 

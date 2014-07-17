@@ -64,7 +64,6 @@
 
     _transitionCss: ($exitTile, $enterTile) ->
       enterTileClass = $enterTile.data('tiler-active-class')
-      return unless enterTileClass
 
       row = $enterTile.data('tiler-row')
       col = $enterTile.data('tiler-col')
@@ -129,6 +128,7 @@
       $enterTile.show()
 
       # trigger the end position
+      setTimeout -> $enterTile.addClass 'active'
       $enterTile.switchClass enterTileInitialPosition, enterTileFinalPosition
 
     # find possible lins throughout the entire page and set meta data on them

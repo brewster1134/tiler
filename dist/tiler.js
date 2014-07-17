@@ -59,9 +59,6 @@
       _transitionCss: function($exitTile, $enterTile) {
         var col, enterTileClass, enterTileFinalPosition, enterTileInitialPosition, enterTileInitialState, exitTileFinalPosition, exitTileInitialPosition, exitTileInitialState, row;
         enterTileClass = $enterTile.data('tiler-active-class');
-        if (!enterTileClass) {
-          return;
-        }
         row = $enterTile.data('tiler-row');
         col = $enterTile.data('tiler-col');
         if (!this.options.reverseSupport || this._isNavigatingForward(row, col)) {
@@ -102,6 +99,9 @@
           transitionDuration: $enterTile.data('tiler-transition-duration')
         });
         $enterTile.show();
+        setTimeout(function() {
+          return $enterTile.addClass('active');
+        });
         return $enterTile.switchClass(enterTileInitialPosition, enterTileFinalPosition);
       },
       _buildLinks: function() {

@@ -1,0 +1,88 @@
+.tiler-viewport
+  height: 200px
+  width: 100%
+  .tiler-tile
+    transition-duration: 0.5s
+    transition-property: left, top
+    transition-timing-function: linear
+
+    span
+      transition-duration: 0.5s
+      transition-property: opacity, transform
+      transition-timing-function: linear
+
+      height: 50px
+      width: 50px
+      background: pink
+      display: inline-block
+      opacity: 0
+
+
+    &#tile-1
+      background: red
+    &#tile-2
+      background: yellow
+    &#tile-3
+      background: blue
+    &#tile-4
+      background: black
+
+    &.active
+      span
+        opacity: 1
+        &#box-1
+          transition-delay: 1s
+          transform: scale(1.3, 1.3) translate(10px, 10px) rotate(45deg)
+        &#box-2
+          transition-delay: 2s
+          transform: scale(1.6, 1.6) translate(20px, 20px) rotate(45deg)
+        &#box-3
+          transition-delay: 3s
+          transform: scale(1.9, 1.9) translate(30px, 30px) rotate(45deg)
+
+    // TILE ANIMATIONS
+    //
+    &.slide-left
+      &.enter
+        &.start
+          left: 100%
+        &.end
+          left: 0
+      &.exit
+        &.start
+          left: 0
+        &.end
+          left: -100%
+    &.slide-right
+      &.enter
+        &.start
+          left: -100%
+        &.end
+          left: 0
+      &.exit
+        &.start
+          left: 0
+        &.end
+          left: 100%
+    &.slide-up
+      &.enter
+        &.start
+          top: 100%
+        &.end
+          top: 0
+      &.exit
+        &.start
+          top: 0
+        &.end
+          top: -100%
+    &.slide-down
+      &.enter
+        &.start
+          top: -100%
+        &.end
+          top: 0
+      &.exit
+        &.start
+          top: 0
+        &.end
+          top: 100%

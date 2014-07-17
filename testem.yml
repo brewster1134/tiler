@@ -1,11 +1,12 @@
 test_page: spec/index.html
-before_tests: coffee -o dist/ -c src/tiler.coffee && coffee -o .tmp/ -c spec/tiler_spec.coffee && bundle exec sass src/tiler.sass dist/tiler.css && bundle exec sass spec/tiler_spec.sass .tmp/tiler_spec.css
+before_tests: coffee -o dist/ -c src/tiler.coffee && coffee -o .tmp/ -c spec/tiler_spec.coffee && bundle exec sass src/tiler.sass dist/tiler.css && bundle exec sass spec/tiler_spec.sass .tmp/tiler_spec.css && bundle exec sass demo/tiler_demo.sass demo/tiler_demo.css
 src_files:
-  - src/tiler.coffee
-  - src/tiler.sass
+  - demo/tiler_demo.sass
+  - spec/index.html
   - spec/tiler_spec.coffee
   - spec/tiler_spec.sass
-  - spec/index.html
+  - src/tiler.coffee
+  - src/tiler.sass
 serve_files:
   - .tmp/*.js
   - dist/*.js

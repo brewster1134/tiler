@@ -1,6 +1,6 @@
 .tiler-viewport {
   overflow: hidden;
   position: relative; }
-  .tiler-viewport .tiler {
+  .tiler-viewport .tiler-tile {
     display: none;
     position: absolute; }

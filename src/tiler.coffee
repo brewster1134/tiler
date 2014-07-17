@@ -21,29 +21,34 @@
     widgetEventPrefix: 'tiler'
     options:
       initialTile: [1,1]
-      tileSelector: '.tiler'
       reverseSupport: true
 
     _create: ->
       @grid = {}
-      @animating = false
-      @$currentTile = [1,1]
-      @$tiles = $(@options.tileSelector, @element)
+      @$currentTile = [0,0]
+      @$tiles = $('.tiler-tile', @element)
 
     _init: ->
       @_sizeTiles()
       @_buildGrid()
-      @goToTile @options.initialTile...
+      @_buildLinks()
+      @goTo @options.initialTile...
 
     # PUBLIC METHODS
     #
-    goToTile: (row, col) ->
-      $exitTile = @grid[@$currentTile[0]][@$currentTile[1]]
+    goTo: (idOrRow, col = null) ->
+      # detect tile id or coordinates
+      unless col
+        row = @$tiles.filter("##{idOrRow}").data('tiler-row')
+        col = @$tiles.filter("##{idOrRow}").data('tiler-col')
+      else
+        row = idOrRow
+
+      $exitTile = @grid[@$currentTile[0]]?[@$currentTile[1]] || $()
       $enterTile = @grid[row][col]
 
       # return if we are already on that tile
-      return if @$currentTile == [row, col]
-      return if @animating
+      return if @$currentTile[0] == row && @$currentTile[1] == col
 
       # hide all uninvolved tiles
       @$tiles.not($exitTile).not($enterTile).hide()
@@ -60,8 +65,8 @@
       enterTileClass = $enterTile.data('tiler-active-class')
       return unless enterTileClass
 
-      row = parseInt($enterTile.data('tiler-row'))
-      col = parseInt($enterTile.data('tiler-col'))
+      row = $enterTile.data('tiler-row')
+      col = $enterTile.data('tiler-col')
 
       # determine the direction of animation
       #
@@ -88,7 +93,7 @@
       #
 
       # reset
-      $exitTile.attr 'class', "tiler #{exitTileInitialState}"
+      $exitTile.attr 'class', "tiler-tile #{exitTileInitialState}"
       $exitTile.addClass enterTileClass
 
       # set enter tile start position
@@ -111,7 +116,7 @@
       #
 
       # reset
-      $enterTile.attr 'class', "tiler #{enterTileInitialState}"
+      $enterTile.attr 'class', "tiler-tile #{enterTileInitialState}"
       $enterTile.addClass enterTileClass
 
       # set enter tile start position
@@ -125,12 +130,30 @@
       $enterTile.show()
 
       # trigger the end position
-      setTimeout =>
-        @animating = true
-        $exitTile.on 'transitionend', => @animating = false
-
+      setTimeout ->
         $enterTile.addClass enterTileFinalPosition
         $enterTile.removeClass enterTileInitialPosition
+
+    # find possible lins throughout the entire page and set meta data on them
+    #
+    _buildLinks: ->
+      _this = @
+
+      $('[data-tiler-link-id]').each ->
+        tileId = $(@).data('tiler-link-id').split(':')
+
+        # check for tiler namespace
+        if tileId.length == 2
+          tilerInstance = $(".tiler-viewport##{tileId[0]}")
+          tileInstance = $(".tiler-tile##{tileId[1]}", tilerInstance)
+        else
+          tileInstance = $(".tiler-tile##{tileId[0]}")
+
+        # get tile title
+        tileTitle = tileInstance.data('tiler-title')
+
+        # set tile title to link
+        $(@).attr 'data-tiler-title', tileTitle
 
     # match all the tiles to the size of the viewport
     #
@@ -166,7 +189,5 @@
     _isNavigatingForward: (row, col) ->
       currentRow = @$currentTile[0]
       currentCol = @$currentTile[1]
-
-      console.log row, col, currentRow, currentCol
 
       (row > currentRow) || (row == currentRow && col >= currentCol)

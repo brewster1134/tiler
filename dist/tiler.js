@@ -22,28 +22,33 @@
       widgetEventPrefix: 'tiler',
       options: {
         initialTile: [1, 1],
-        tileSelector: '.tiler',
         reverseSupport: true
       },
       _create: function() {
         this.grid = {};
-        this.animating = false;
-        this.$currentTile = [1, 1];
-        return this.$tiles = $(this.options.tileSelector, this.element);
+        this.$currentTile = [0, 0];
+        return this.$tiles = $('.tiler-tile', this.element);
       },
       _init: function() {
         this._sizeTiles();
         this._buildGrid();
-        return this.goToTile.apply(this, this.options.initialTile);
+        this._buildLinks();
+        return this.goTo.apply(this, this.options.initialTile);
       },
-      goToTile: function(row, col) {
-        var $enterTile, $exitTile;
-        $exitTile = this.grid[this.$currentTile[0]][this.$currentTile[1]];
-        $enterTile = this.grid[row][col];
-        if (this.$currentTile === [row, col]) {
-          return;
+      goTo: function(idOrRow, col) {
+        var $enterTile, $exitTile, row, _ref;
+        if (col == null) {
+          col = null;
         }
-        if (this.animating) {
+        if (!col) {
+          row = this.$tiles.filter("#" + idOrRow).data('tiler-row');
+          col = this.$tiles.filter("#" + idOrRow).data('tiler-col');
+        } else {
+          row = idOrRow;
+        }
+        $exitTile = ((_ref = this.grid[this.$currentTile[0]]) != null ? _ref[this.$currentTile[1]] : void 0) || $();
+        $enterTile = this.grid[row][col];
+        if (this.$currentTile[0] === row && this.$currentTile[1] === col) {
           return;
         }
         this.$tiles.not($exitTile).not($enterTile).hide();
@@ -57,8 +62,8 @@
         if (!enterTileClass) {
           return;
         }
-        row = parseInt($enterTile.data('tiler-row'));
-        col = parseInt($enterTile.data('tiler-col'));
+        row = $enterTile.data('tiler-row');
+        col = $enterTile.data('tiler-col');
         if (!this.options.reverseSupport || this._isNavigatingForward(row, col)) {
           exitTileInitialState = 'exit';
           exitTileInitialPosition = 'start';
@@ -74,7 +79,7 @@
           enterTileInitialPosition = 'end';
           enterTileFinalPosition = 'start';
         }
-        $exitTile.attr('class', "tiler " + exitTileInitialState);
+        $exitTile.attr('class', "tiler-tile " + exitTileInitialState);
         $exitTile.addClass(enterTileClass);
         $exitTile.data('tiler-transition', $exitTile.css('transition'));
         $exitTile.data('tiler-transition-duration', $exitTile.css('transition-duration'));
@@ -89,7 +94,7 @@
           $exitTile.addClass(exitTileFinalPosition);
           return $exitTile.removeClass(exitTileInitialPosition);
         });
-        $enterTile.attr('class', "tiler " + enterTileInitialState);
+        $enterTile.attr('class', "tiler-tile " + enterTileInitialState);
         $enterTile.addClass(enterTileClass);
         $enterTile.data('tiler-transition', $enterTile.css('transition'));
         $enterTile.data('tiler-transition-duration', $enterTile.css('transition-duration'));
@@ -100,16 +105,26 @@
           transitionDuration: $enterTile.data('tiler-transition-duration')
         });
         $enterTile.show();
-        return setTimeout((function(_this) {
-          return function() {
-            _this.animating = true;
-            $exitTile.on('transitionend', function() {
-              return _this.animating = false;
-            });
-            $enterTile.addClass(enterTileFinalPosition);
-            return $enterTile.removeClass(enterTileInitialPosition);
-          };
-        })(this));
+        return setTimeout(function() {
+          $enterTile.addClass(enterTileFinalPosition);
+          return $enterTile.removeClass(enterTileInitialPosition);
+        });
+      },
+      _buildLinks: function() {
+        var _this;
+        _this = this;
+        return $('[data-tiler-link-id]').each(function() {
+          var tileId, tileInstance, tileTitle, tilerInstance;
+          tileId = $(this).data('tiler-link-id').split(':');
+          if (tileId.length === 2) {
+            tilerInstance = $(".tiler-viewport#" + tileId[0]);
+            tileInstance = $(".tiler-tile#" + tileId[1], tilerInstance);
+          } else {
+            tileInstance = $(".tiler-tile#" + tileId[0]);
+          }
+          tileTitle = tileInstance.data('tiler-title');
+          return $(this).attr('data-tiler-title', tileTitle);
+        });
       },
       _sizeTiles: function() {
         return this.$tiles.css({
@@ -135,7 +150,6 @@
         var currentCol, currentRow;
         currentRow = this.$currentTile[0];
         currentCol = this.$currentTile[1];
-        console.log(row, col, currentRow, currentCol);
         return (row > currentRow) || (row === currentRow && col >= currentCol);
       }
     });

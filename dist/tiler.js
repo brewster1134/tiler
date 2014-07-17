@@ -11,7 +11,7 @@
 (function() {
   (function(root, factory) {
     if (typeof define === 'function' && define.amd) {
-      return define(['jquery', 'widget'], function($) {
+      return define(['jquery', 'widget', 'effect'], function($) {
         return factory($);
       });
     } else {
@@ -90,10 +90,7 @@
           transitionDuration: $exitTile.data('tiler-transition-duration')
         });
         $exitTile.show();
-        setTimeout(function() {
-          $exitTile.addClass(exitTileFinalPosition);
-          return $exitTile.removeClass(exitTileInitialPosition);
-        });
+        $exitTile.switchClass(exitTileInitialPosition, exitTileFinalPosition);
         $enterTile.attr('class', "tiler-tile " + enterTileInitialState);
         $enterTile.addClass(enterTileClass);
         $enterTile.data('tiler-transition', $enterTile.css('transition'));
@@ -105,10 +102,7 @@
           transitionDuration: $enterTile.data('tiler-transition-duration')
         });
         $enterTile.show();
-        return setTimeout(function() {
-          $enterTile.addClass(enterTileFinalPosition);
-          return $enterTile.removeClass(enterTileInitialPosition);
-        });
+        return $enterTile.switchClass(enterTileInitialPosition, enterTileFinalPosition);
       },
       _buildLinks: function() {
         var _this;

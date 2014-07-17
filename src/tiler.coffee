@@ -11,6 +11,7 @@
     define [
         'jquery'
         'widget'
+        'effect'
       ], ($) ->
       factory $
   else
@@ -107,9 +108,7 @@
       $exitTile.show()
 
       # trigger the end position
-      setTimeout ->
-        $exitTile.addClass exitTileFinalPosition
-        $exitTile.removeClass exitTileInitialPosition
+      $exitTile.switchClass exitTileInitialPosition, exitTileFinalPosition
 
 
       # ENTER TILE
@@ -130,9 +129,7 @@
       $enterTile.show()
 
       # trigger the end position
-      setTimeout ->
-        $enterTile.addClass enterTileFinalPosition
-        $enterTile.removeClass enterTileInitialPosition
+      $enterTile.switchClass enterTileInitialPosition, enterTileFinalPosition
 
     # find possible lins throughout the entire page and set meta data on them
     #

@@ -18,22 +18,33 @@ describe 'Tiler', ->
             initialTile: 1
 
         it 'should activate the initial tile', ->
-          expect($('#initial-tile #tile-2').hasClass('active')).to.be.true
+          expect($('#initial-tile #tile-1').hasClass('active')).to.be.true
 
       describe 'reverseSupport', ->
         before ->
           $('#reverse-support').tiler
-            initialTile: 0
+            initialTile: 1
             reverseSupport: true
 
         it 'should set the reverse classes', ->
           expect($('#reverse-support #tile-1').hasClass('exit')).to.be.true
 
   describe '.goTo', ->
+    # eventSpy = null
+    eventSpy = sinon.spy()
+
     before ->
       $('#go-to').tiler
-        initialTile: 0
-      $('#go-to').tiler('goTo', 1)
+        initialTile: 1
+
+      # setup event after initialize to only test the event being called on the goTo call
+      $('#go-to').on 'tiler.goto', (e, data) ->
+        eventSpy data.enterTile.attr('id'), data.exitTile.attr('id')
+
+      $('#go-to').tiler('goTo', 2)
 
     it 'should activate the tile', ->
       expect($('#go-to #tile-2').hasClass('active')).to.be.true
+
+    it 'should fire an event', ->
+      expect(eventSpy).to.be.calledWith 'tile-2', 'tile-1'

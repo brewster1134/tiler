@@ -21,7 +21,7 @@
     return $.widget('ui.tiler', {
       widgetEventPrefix: 'tiler',
       options: {
-        initialTile: 0,
+        initialTile: 1,
         reverseSupport: true
       },
       _create: function() {
@@ -37,25 +37,29 @@
         var $enterTile, $exitTile, $tile, tileId;
         if (typeof idOrRow === 'string') {
           $tile = this.$tiles.filter("#" + idOrRow);
-          tileId = this.$tiles.index($tile);
+          tileId = this.$tiles.index($tile) + 1;
         } else {
-          $tile = this.$tiles.eq(idOrRow);
+          $tile = this.$tiles.eq(idOrRow - 1);
           tileId = idOrRow;
         }
         if (this.$currentTileId === tileId) {
           return;
         }
-        $exitTile = this.$tiles.eq(this.$currentTileId);
         $enterTile = $tile;
+        $exitTile = this.$tiles.eq(this.$currentTileId - 1);
         this.$tiles.not($exitTile).not($enterTile).hide();
-        this._transitionCss($exitTile, $enterTile);
+        this._transitionCss($enterTile, $exitTile);
+        this.element.trigger('tiler.goto', {
+          enterTile: $enterTile,
+          exitTile: $exitTile
+        });
         this.$currentTileId = tileId;
         return $enterTile;
       },
-      _transitionCss: function($exitTile, $enterTile) {
+      _transitionCss: function($enterTile, $exitTile) {
         var enterTileClass, enterTileFinalPosition, enterTileId, enterTileInitialPosition, enterTileInitialState, exitTileFinalPosition, exitTileInitialPosition, exitTileInitialState;
         enterTileClass = $enterTile.data('tiler-active-class');
-        enterTileId = this.$tiles.index($enterTile);
+        enterTileId = this.$tiles.index($enterTile, $exitTile);
         if (!this.options.reverseSupport || this._isNavigatingForward(enterTileId)) {
           exitTileInitialState = 'exit';
           exitTileInitialPosition = 'start';
@@ -84,7 +88,6 @@
         $exitTile.show();
         $exitTile.switchClass(exitTileInitialPosition, exitTileFinalPosition);
         $enterTile.attr('class', "tiler-tile " + enterTileInitialState);
-        $enterTile.addClass(enterTileClass);
         $enterTile.data('tiler-transition', $enterTile.css('transition'));
         $enterTile.data('tiler-transition-duration', $enterTile.css('transition-duration'));
         $enterTile.css('transition-duration', 0);
@@ -94,8 +97,7 @@
           transitionDuration: $enterTile.data('tiler-transition-duration')
         });
         $enterTile.show();
-        $enterTile.addClass('active');
-        return $enterTile.switchClass(enterTileInitialPosition, enterTileFinalPosition);
+        return $enterTile.switchClass(enterTileInitialPosition, "active " + enterTileClass + " " + enterTileFinalPosition);
       },
       _buildLinks: function() {
         var _this;

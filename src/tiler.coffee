@@ -21,7 +21,7 @@
   $.widget 'ui.tiler',
     widgetEventPrefix: 'tiler'
     options:
-      initialTile: 0
+      initialTile: 1
       reverseSupport: true
 
     _create: ->
@@ -39,34 +39,37 @@
       # detect tile id or coordinates
       if typeof idOrRow == 'string'
         $tile = @$tiles.filter("##{idOrRow}")
-        tileId = @$tiles.index $tile
+        tileId = @$tiles.index($tile) + 1
       else
-        $tile = @$tiles.eq idOrRow
+        $tile = @$tiles.eq(idOrRow - 1)
         tileId = idOrRow
 
       # return if we are already on that tile
       return if @$currentTileId == tileId
 
-      $exitTile = @$tiles.eq @$currentTileId
       $enterTile = $tile
+      $exitTile = @$tiles.eq(@$currentTileId - 1)
 
       # hide all uninvolved tiles
       @$tiles.not($exitTile).not($enterTile).hide()
 
       # manage css classes if an one is specified
-      @_transitionCss $exitTile, $enterTile
+      @_transitionCss $enterTile, $exitTile
 
       # fire js events
-      # TODO
+      # @element.trigger 'tiler.goto', $enterTile.attr('id'), $exitTile.attr('id')
+      @element.trigger 'tiler.goto',
+        enterTile: $enterTile
+        exitTile: $exitTile
 
       # update the current tile id
       @$currentTileId = tileId
 
       return $enterTile
 
-    _transitionCss: ($exitTile, $enterTile) ->
+    _transitionCss: ($enterTile, $exitTile) ->
       enterTileClass = $enterTile.data('tiler-active-class')
-      enterTileId = @$tiles.index $enterTile
+      enterTileId = @$tiles.index $enterTile, $exitTile
 
       # determine the direction of animation
       #
@@ -117,7 +120,6 @@
 
       # reset
       $enterTile.attr 'class', "tiler-tile #{enterTileInitialState}"
-      $enterTile.addClass enterTileClass
 
       # set enter tile start position
       # backup any transition data.  we need to set a start position without any animations
@@ -132,8 +134,7 @@
       $enterTile.show()
 
       # trigger the end position
-      $enterTile.addClass 'active'
-      $enterTile.switchClass enterTileInitialPosition, enterTileFinalPosition
+      $enterTile.switchClass enterTileInitialPosition, "active #{enterTileClass} #{enterTileFinalPosition}"
 
     # find possible lins throughout the entire page and set meta data on them
     #

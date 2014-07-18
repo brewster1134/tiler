@@ -1,19 +1,33 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0; }
+
 .tiler-viewport {
   height: 200px;
-  width: 100%; }
+  width: 100%;
+  margin-bottom: 20px; }
+  .tiler-viewport#background {
+    height: 50%;
+    transition-duration: 0.5s;
+    transition-property: background-position;
+    transition-timing-function: linear;
+    background-size: auto;
+    background-image: url(mountain.jpg);
+    background-position: 0% 100%; }
+    .tiler-viewport#background .tiler-tile {
+      background-color: transparent !important; }
+  .tiler-viewport .buttons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2; }
   .tiler-viewport .tiler-tile {
+    z-index: 1;
     transition-duration: 0.5s;
     transition-property: left, top;
     transition-timing-function: linear; }
-    .tiler-viewport .tiler-tile span {
-      transition-duration: 0.5s;
-      transition-property: opacity, transform;
-      transition-timing-function: linear;
-      height: 50px;
-      width: 50px;
-      background: pink;
-      display: inline-block;
-      opacity: 0; }
     .tiler-viewport .tiler-tile#tile-1 {
       background: red; }
     .tiler-viewport .tiler-tile#tile-2 {
@@ -21,18 +35,28 @@
     .tiler-viewport .tiler-tile#tile-3 {
       background: blue; }
     .tiler-viewport .tiler-tile#tile-4 {
-      background: black; }
+      background: pink; }
     .tiler-viewport .tiler-tile.active span {
       opacity: 1; }
       .tiler-viewport .tiler-tile.active span#box-1 {
-        transition-delay: 1s;
-        transform: scale(1.3, 1.3) translate(10px, 10px) rotate(45deg); }
+        transition-delay: 0.5s;
+        transform: scale(1.3, 1.3) translate(20px, 20px) rotate(45deg); }
       .tiler-viewport .tiler-tile.active span#box-2 {
-        transition-delay: 2s;
-        transform: scale(1.6, 1.6) translate(20px, 20px) rotate(45deg); }
+        transition-delay: 1s;
+        transform: scale(1.6, 1.6) translate(30px, 30px) rotate(45deg); }
       .tiler-viewport .tiler-tile.active span#box-3 {
-        transition-delay: 3s;
-        transform: scale(1.9, 1.9) translate(30px, 30px) rotate(45deg); }
+        transition-delay: 1.5s;
+        transform: scale(1.9, 1.9) translate(40px, 40px) rotate(45deg); }
+    .tiler-viewport .tiler-tile span {
+      transition-duration: 0.5s;
+      transition-property: opacity, transform;
+      transition-timing-function: linear;
+      height: 50px;
+      width: 50px;
+      background: white;
+      border: 3px solid black;
+      display: inline-block;
+      opacity: 0; }
     .tiler-viewport .tiler-tile.slide-left.enter.start {
       left: 100%; }
     .tiler-viewport .tiler-tile.slide-left.enter.end {

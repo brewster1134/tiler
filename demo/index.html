@@ -10,50 +10,72 @@
     <script src="../vendor/modernizr/modernizr.js"></script>
   </head>
   <body>
-    <div>
-      <h4>Horizontal</h4>
-      <button data-tiler-link-id="tile-1"></button>
-      <button data-tiler-link-id="tile-2"></button>
-      <button data-tiler-link-id="tile-3"></button>
-      <button data-tiler-link-id="tile-4"></button>
-      <div class="tiler-viewport" id="horizontal">
-        <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-active-class="slide-left">
-          <span id="box-1"></span><span id="box-2"></span><span id="box-3"></span>
-        </div>
-        <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-active-class="slide-left"></div>
-        <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-active-class="slide-left"></div>
-        <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-active-class="slide-left"></div>
+    <div class="tiler-viewport" id="background">
+      <div class="buttons">
+        <h4>Background</h4>
+        <button data-tiler-link-id="tile-1"></button>
+        <button data-tiler-link-id="tile-2"></button>
+        <button data-tiler-link-id="tile-3"></button>
+        <button data-tiler-link-id="tile-4"></button>
       </div>
+
+      <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1">
+        <span id="box-1"></span><span id="box-2"></span><span id="box-3"></span>
+      </div>
+      <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2"></div>
+      <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3"></div>
+      <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4"></div>
     </div>
 
-    <div>
-      <h4>Vertical</h4>
-      <button data-tiler-link-id="tile-1"></button>
-      <button data-tiler-link-id="tile-2"></button>
-      <button data-tiler-link-id="tile-3"></button>
-      <button data-tiler-link-id="tile-4"></button>
-      <div class="tiler-viewport" id="vertical">
-        <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-active-class="slide-up"></div>
-        <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-active-class="slide-up"></div>
-        <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-active-class="slide-up"></div>
-        <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-active-class="slide-up"></div>
+    <div class="tiler-viewport" id="horizontal">
+      <div class="buttons">
+        <h4>Horizontal</h4>
+        <button data-tiler-link-id="tile-1"></button>
+        <button data-tiler-link-id="tile-2"></button>
+        <button data-tiler-link-id="tile-3"></button>
+        <button data-tiler-link-id="tile-4"></button>
       </div>
+      <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-active-class="slide-left">
+        <span id="box-1"></span><span id="box-2"></span><span id="box-3"></span>
+      </div>
+      <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-active-class="slide-left"></div>
+      <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-active-class="slide-left"></div>
+      <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-active-class="slide-left"></div>
     </div>
 
-    <div>
-      <h4>Multi</h4>
-      <button data-tiler-link-id="tile-1"></button>
-      <button data-tiler-link-id="tile-2"></button>
-      <button data-tiler-link-id="tile-3"></button>
-      <button data-tiler-link-id="tile-4"></button>
-      <div class="tiler-viewport" id="multi">
-        <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-active-class="slide-down"></div>
-        <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-active-class="slide-right"></div>
-        <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-active-class="slide-up"></div>
-        <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-active-class="slide-left"></div>
+    <div class="tiler-viewport" id="vertical">
+      <div class="buttons">
+        <h4>Vertical</h4>
+        <button data-tiler-link-id="tile-1"></button>
+        <button data-tiler-link-id="tile-2"></button>
+        <button data-tiler-link-id="tile-3"></button>
+        <button data-tiler-link-id="tile-4"></button>
       </div>
+      <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-active-class="slide-up">
+        <span id="box-1"></span><span id="box-2"></span><span id="box-3"></span>
+      </div>
+      <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-active-class="slide-up"></div>
+      <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-active-class="slide-up"></div>
+      <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-active-class="slide-up"></div>
     </div>
-  </body>
+
+    <div class="tiler-viewport" id="multi">
+      <div class="buttons">
+        <h4>Multi</h4>
+        <button data-tiler-link-id="tile-1"></button>
+        <button data-tiler-link-id="tile-2"></button>
+        <button data-tiler-link-id="tile-3"></button>
+        <button data-tiler-link-id="tile-4"></button>
+      </div>
+      <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-active-class="slide-down">
+        <span id="box-1"></span><span id="box-2"></span><span id="box-3"></span>
+      </div>
+      <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-active-class="slide-right"></div>
+      <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-active-class="slide-up"></div>
+      <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-active-class="slide-left"></div>
+    </div>
+  </div>
+</body>
 
   <script src="../vendor/jquery/dist/jquery.js"></script>
   <script src="../vendor/jquery-ui/ui/effect.js"></script>
@@ -70,8 +92,34 @@
 
         $('button').click(function() {
           tileId = $(this).data('tiler-link-id');
-          $(this).siblings('.tiler-viewport').tiler('goTo', tileId);
+          $(this).closest('.tiler-viewport').tiler('goTo', tileId);
         });
+
+
+        $('#background button').click(function() {
+          var bgpos, x, y;
+          bgpos = (function() {
+            switch ($(this).data('tiler-link-id')) {
+              case 'tile-1':
+                x = 0;
+                return y = 100;
+              case 'tile-2':
+                x = 50;
+                return y = 100;
+              case 'tile-3':
+                x = 50;
+                return y = 50;
+              case 'tile-4':
+                x = 50;
+                return y = 0;
+            }
+          }).call(this);
+          return $(this).closest('.tiler-viewport').css({
+            backgroundPosition: "" + x + "% " + y + "%"
+          });
+        });
+
+
       });
     })(jQuery);
   </script>

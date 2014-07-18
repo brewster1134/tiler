@@ -29,13 +29,13 @@ html, body {
     transition-property: left, top;
     transition-timing-function: linear; }
     .tiler-viewport .tiler-tile#tile-1 {
-      background: red; }
+      background: #d6d7ef; }
     .tiler-viewport .tiler-tile#tile-2 {
-      background: yellow; }
+      background: #8d8fd3; }
     .tiler-viewport .tiler-tile#tile-3 {
-      background: blue; }
+      background: #4549b5; }
     .tiler-viewport .tiler-tile#tile-4 {
-      background: pink; }
+      background: #292b6b; }
     .tiler-viewport .tiler-tile.active span {
       opacity: 1; }
       .tiler-viewport .tiler-tile.active span#box-1 {

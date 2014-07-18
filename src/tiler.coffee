@@ -21,35 +21,34 @@
   $.widget 'ui.tiler',
     widgetEventPrefix: 'tiler'
     options:
-      initialTile: [1,1]
+      initialTile: 0
       reverseSupport: true
 
     _create: ->
-      @grid = {}
-      @$currentTile = [0,0]
+      @$currentTileId = null
       @$tiles = $('.tiler-tile', @element)
 
     _init: ->
       @_sizeTiles()
-      @_buildGrid()
       @_buildLinks()
-      @goTo @options.initialTile...
+      @goTo @options.initialTile
 
     # PUBLIC METHODS
     #
-    goTo: (idOrRow, col = null) ->
+    goTo: (idOrRow) ->
       # detect tile id or coordinates
-      unless col
-        row = @$tiles.filter("##{idOrRow}").data('tiler-row')
-        col = @$tiles.filter("##{idOrRow}").data('tiler-col')
+      if typeof idOrRow == 'string'
+        $tile = @$tiles.filter("##{idOrRow}")
+        tileId = @$tiles.index $tile
       else
-        row = idOrRow
-
-      $exitTile = @grid[@$currentTile[0]]?[@$currentTile[1]] || $()
-      $enterTile = @grid[row][col]
+        $tile = @$tiles.eq idOrRow
+        tileId = idOrRow
 
       # return if we are already on that tile
-      return if @$currentTile[0] == row && @$currentTile[1] == col
+      return if @$currentTileId == tileId
+
+      $exitTile = @$tiles.eq @$currentTileId
+      $enterTile = $tile
 
       # hide all uninvolved tiles
       @$tiles.not($exitTile).not($enterTile).hide()
@@ -57,20 +56,21 @@
       # manage css classes if an one is specified
       @_transitionCss $exitTile, $enterTile
 
-      # update the current tile
-      @$currentTile = [row, col]
+      # fire js events
+      # TODO
+
+      # update the current tile id
+      @$currentTileId = tileId
 
       return $enterTile
 
     _transitionCss: ($exitTile, $enterTile) ->
       enterTileClass = $enterTile.data('tiler-active-class')
-
-      row = $enterTile.data('tiler-row')
-      col = $enterTile.data('tiler-col')
+      enterTileId = @$tiles.index $enterTile
 
       # determine the direction of animation
       #
-      if !@options.reverseSupport || @_isNavigatingForward(row, col)
+      if !@options.reverseSupport || @_isNavigatingForward(enterTileId)
         exitTileInitialState = 'exit'
         exitTileInitialPosition = 'start'
         exitTileFinalPosition = 'end'
@@ -97,6 +97,8 @@
       $exitTile.addClass enterTileClass
 
       # set enter tile start position
+      # backup any transition data.  we need to set a start position without any animations
+      #
       $exitTile.data 'tiler-transition', $exitTile.css('transition')
       $exitTile.data 'tiler-transition-duration', $exitTile.css('transition-duration')
       $exitTile.css 'transition-duration', 0
@@ -118,6 +120,8 @@
       $enterTile.addClass enterTileClass
 
       # set enter tile start position
+      # backup any transition data.  we need to set a start position without any animations
+      #
       $enterTile.data 'tiler-transition', $enterTile.css('transition')
       $enterTile.data 'tiler-transition-duration', $enterTile.css('transition-duration')
       $enterTile.css 'transition-duration', 0
@@ -128,7 +132,7 @@
       $enterTile.show()
 
       # trigger the end position
-      setTimeout -> $enterTile.addClass 'active'
+      $enterTile.addClass 'active'
       $enterTile.switchClass enterTileInitialPosition, enterTileFinalPosition
 
     # find possible lins throughout the entire page and set meta data on them
@@ -159,32 +163,7 @@
         width: @element.outerWidth()
         height: @element.outerHeight()
 
-    # calculate the virtual grid locations of all the tiles
-    #
-    _buildGrid: ->
-      _this = @
-
-      @$tiles.each ->
-        # check if row is set explicitly, otherwise calculate it
-        row = $(@).data('tiler-row') || (Object.keys(_this.grid).length + 1)
-
-        # calculate col
-        col = Object.keys(_this.grid[row] || {}).length + 1
-
-        # add meta data to tiles
-        $(@).data 'tiler-row', row
-        $(@).data 'tiler-col', col
-
-        # add jquery object to its proper coordinate
-        _this.grid[row] ||= {}
-        _this.grid[row][col] = $(@)
-
-      @grid
-
     # determine if we are advancing or retreating through our virtual tiles
     #
-    _isNavigatingForward: (row, col) ->
-      currentRow = @$currentTile[0]
-      currentCol = @$currentTile[1]
-
-      (row > currentRow) || (row == currentRow && col >= currentCol)
+    _isNavigatingForward: (enterTileId) ->
+      enterTileId < @$currentTileId

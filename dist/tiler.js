@@ -21,47 +21,42 @@
     return $.widget('ui.tiler', {
       widgetEventPrefix: 'tiler',
       options: {
-        initialTile: [1, 1],
+        initialTile: 0,
         reverseSupport: true
       },
       _create: function() {
-        this.grid = {};
-        this.$currentTile = [0, 0];
+        this.$currentTileId = null;
         return this.$tiles = $('.tiler-tile', this.element);
       },
       _init: function() {
         this._sizeTiles();
-        this._buildGrid();
         this._buildLinks();
-        return this.goTo.apply(this, this.options.initialTile);
+        return this.goTo(this.options.initialTile);
       },
-      goTo: function(idOrRow, col) {
-        var $enterTile, $exitTile, row, _ref;
-        if (col == null) {
-          col = null;
-        }
-        if (!col) {
-          row = this.$tiles.filter("#" + idOrRow).data('tiler-row');
-          col = this.$tiles.filter("#" + idOrRow).data('tiler-col');
+      goTo: function(idOrRow) {
+        var $enterTile, $exitTile, $tile, tileId;
+        if (typeof idOrRow === 'string') {
+          $tile = this.$tiles.filter("#" + idOrRow);
+          tileId = this.$tiles.index($tile);
         } else {
-          row = idOrRow;
+          $tile = this.$tiles.eq(idOrRow);
+          tileId = idOrRow;
         }
-        $exitTile = ((_ref = this.grid[this.$currentTile[0]]) != null ? _ref[this.$currentTile[1]] : void 0) || $();
-        $enterTile = this.grid[row][col];
-        if (this.$currentTile[0] === row && this.$currentTile[1] === col) {
+        if (this.$currentTileId === tileId) {
           return;
         }
+        $exitTile = this.$tiles.eq(this.$currentTileId);
+        $enterTile = $tile;
         this.$tiles.not($exitTile).not($enterTile).hide();
         this._transitionCss($exitTile, $enterTile);
-        this.$currentTile = [row, col];
+        this.$currentTileId = tileId;
         return $enterTile;
       },
       _transitionCss: function($exitTile, $enterTile) {
-        var col, enterTileClass, enterTileFinalPosition, enterTileInitialPosition, enterTileInitialState, exitTileFinalPosition, exitTileInitialPosition, exitTileInitialState, row;
+        var enterTileClass, enterTileFinalPosition, enterTileId, enterTileInitialPosition, enterTileInitialState, exitTileFinalPosition, exitTileInitialPosition, exitTileInitialState;
         enterTileClass = $enterTile.data('tiler-active-class');
-        row = $enterTile.data('tiler-row');
-        col = $enterTile.data('tiler-col');
-        if (!this.options.reverseSupport || this._isNavigatingForward(row, col)) {
+        enterTileId = this.$tiles.index($enterTile);
+        if (!this.options.reverseSupport || this._isNavigatingForward(enterTileId)) {
           exitTileInitialState = 'exit';
           exitTileInitialPosition = 'start';
           exitTileFinalPosition = 'end';
@@ -99,9 +94,7 @@
           transitionDuration: $enterTile.data('tiler-transition-duration')
         });
         $enterTile.show();
-        setTimeout(function() {
-          return $enterTile.addClass('active');
-        });
+        $enterTile.addClass('active');
         return $enterTile.switchClass(enterTileInitialPosition, enterTileFinalPosition);
       },
       _buildLinks: function() {
@@ -126,25 +119,8 @@
           height: this.element.outerHeight()
         });
       },
-      _buildGrid: function() {
-        var _this;
-        _this = this;
-        this.$tiles.each(function() {
-          var col, row, _base;
-          row = $(this).data('tiler-row') || (Object.keys(_this.grid).length + 1);
-          col = Object.keys(_this.grid[row] || {}).length + 1;
-          $(this).data('tiler-row', row);
-          $(this).data('tiler-col', col);
-          (_base = _this.grid)[row] || (_base[row] = {});
-          return _this.grid[row][col] = $(this);
-        });
-        return this.grid;
-      },
-      _isNavigatingForward: function(row, col) {
-        var currentCol, currentRow;
-        currentRow = this.$currentTile[0];
-        currentCol = this.$currentTile[1];
-        return (row > currentRow) || (row === currentRow && col >= currentCol);
+      _isNavigatingForward: function(enterTileId) {
+        return enterTileId < this.$currentTileId;
       }
     });
   });

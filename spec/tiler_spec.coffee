@@ -1,23 +1,39 @@
 describe 'Tiler', ->
-  tiler = null
+  describe 'initialize', ->
+    before ->
+      $('#initialize').tiler()
 
-  before ->
-    tiler = $('.tiler-viewport').tiler()
+    it 'should size the tiles', ->
+      expect($('#initialize .tiler-tile').css('width')).to.equal('200px')
+      expect($('#initialize .tiler-tile').css('height')).to.equal('200px')
 
-  describe '#buildGrid', ->
-    it 'should build a grid based on markup', ->
-      expect($('.tiler-tile', tiler).eq(0).data('tiler-row')).to.equal 1
-      expect($('.tiler-tile', tiler).eq(0).data('tiler-col')).to.equal 1
+    describe '_buildLinks', ->
+      it 'should add the title to the link', ->
+        expect($('button').data('tiler-title')).to.equal 'Tile 1'
 
-      expect($('.tiler-tile', tiler).eq(1).data('tiler-row')).to.equal 2
-      expect($('.tiler-tile', tiler).eq(1).data('tiler-col')).to.equal 1
+    context 'with option', ->
+      describe 'initialTile', ->
+        before ->
+          $('#initial-tile').tiler
+            initialTile: 1
 
-      expect($('.tiler-tile', tiler).eq(2).data('tiler-row')).to.equal 2
-      expect($('.tiler-tile', tiler).eq(2).data('tiler-col')).to.equal 2
+        it 'should activate the initial tile', ->
+          expect($('#initial-tile #tile-2').hasClass('active')).to.be.true
 
-      expect($('.tiler-tile', tiler).eq(3).data('tiler-row')).to.equal 3
-      expect($('.tiler-tile', tiler).eq(3).data('tiler-col')).to.equal 1
+      describe 'reverseSupport', ->
+        before ->
+          $('#reverse-support').tiler
+            initialTile: 0
+            reverseSupport: true
 
-  describe '#buildLinks', ->
-    it 'should add the title to the link', ->
-      expect($('button').data('tiler-title')).to.equal 'Tile 1 1'
+        it 'should set the reverse classes', ->
+          expect($('#reverse-support #tile-1').hasClass('exit')).to.be.true
+
+  describe '.goTo', ->
+    before ->
+      $('#go-to').tiler
+        initialTile: 0
+      $('#go-to').tiler('goTo', 1)
+
+    it 'should activate the tile', ->
+      expect($('#go-to #tile-2').hasClass('active')).to.be.true

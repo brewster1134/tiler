@@ -25,7 +25,7 @@
       reverseSupport: true
 
     _create: ->
-      @$currentTileId = null
+      @$currentTileId = 0
       @$tiles = $('.tiler-tile', @element)
 
     _init: ->
@@ -48,7 +48,7 @@
       return if @$currentTileId == tileId
 
       $enterTile = $tile
-      $exitTile = @$tiles.eq(@$currentTileId - 1)
+      $exitTile = @$tiles.eq(Math.max(0, @$currentTileId - 1))
 
       # hide all uninvolved tiles
       @$tiles.not($exitTile).not($enterTile).hide()
@@ -68,8 +68,8 @@
       return $enterTile
 
     _transitionCss: ($enterTile, $exitTile) ->
-      enterTileClass = $enterTile.data('tiler-active-class')
-      enterTileId = @$tiles.index $enterTile, $exitTile
+      enterTileClass = $enterTile.data('tiler-active-class') || ''
+      enterTileId = @$tiles.index($enterTile, $exitTile) + 1
 
       # determine the direction of animation
       #
@@ -94,10 +94,8 @@
 
       # EXIT TILE
       #
-
       # reset
-      $exitTile.attr 'class', "tiler-tile #{exitTileInitialState}"
-      $exitTile.addClass enterTileClass
+      $exitTile.attr 'class', "tiler-tile #{exitTileInitialState} #{enterTileClass}"
 
       # set enter tile start position
       # backup any transition data.  we need to set a start position without any animations
@@ -119,7 +117,7 @@
       #
 
       # reset
-      $enterTile.attr 'class', "tiler-tile #{enterTileInitialState}"
+      $enterTile.attr 'class', "tiler-tile #{enterTileInitialState} #{enterTileClass}"
 
       # set enter tile start position
       # backup any transition data.  we need to set a start position without any animations
@@ -134,7 +132,8 @@
       $enterTile.show()
 
       # trigger the end position
-      $enterTile.switchClass enterTileInitialPosition, "active #{enterTileClass} #{enterTileFinalPosition}"
+      $enterTile.addClass 'active'
+      $enterTile.switchClass enterTileInitialPosition, enterTileFinalPosition
 
     # find possible lins throughout the entire page and set meta data on them
     #
@@ -167,4 +166,4 @@
     # determine if we are advancing or retreating through our virtual tiles
     #
     _isNavigatingForward: (enterTileId) ->
-      enterTileId < @$currentTileId
+      enterTileId > @$currentTileId

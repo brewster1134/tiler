@@ -2,14 +2,13 @@
 
 ![Tiler](http://i.imgur.com/Kt5fVtz.gif)
 
-The example above (as well as the demo) use 4 images, but you can use any html content to transition between.
-
 ## Support
 
 ## Dependencies
 
 * [jQuery](http://jquery.com) version 1.8.0 or greater
 * [jQuery UI Widget](http://jqueryui.com/widget/)
+* jQuery UI Effects Core
 
 ## Getting Started
 Install with bower

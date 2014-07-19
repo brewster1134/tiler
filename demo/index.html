@@ -84,22 +84,12 @@
   <script>
     (function($) {
       $(window).load(function() {
-        $('.tiler-viewport').tiler()
 
-        $('button[data-tiler-title]').each(function() {
-          return $(this).text($(this).data('tiler-title'));
-        });
-
-        $('button').click(function() {
-          tileId = $(this).data('tiler-link-id');
-          $(this).closest('.tiler-viewport').tiler('goTo', tileId);
-        });
-
-
-        $('#background button').click(function() {
+        // event to set background
+        $('#background').on('tiler.goto', function(e, data) {
           var bgpos, x, y;
           bgpos = (function() {
-            switch ($(this).data('tiler-link-id')) {
+            switch (data.enterTile.attr('id')) {
               case 'tile-1':
                 x = 0;
                 return y = 100;
@@ -119,6 +109,19 @@
           });
         });
 
+        // initalize tiler
+        $('.tiler-viewport').tiler()
+
+        // set the button text to match the tile title
+        $('button[data-tiler-title]').each(function() {
+          return $(this).text($(this).data('tiler-title'));
+        });
+
+        // go to a tile on click based on the link id
+        $('button').click(function() {
+          tileId = $(this).data('tiler-link-id');
+          $(this).closest('.tiler-viewport').tiler('goTo', tileId);
+        });
 
       });
     })(jQuery);

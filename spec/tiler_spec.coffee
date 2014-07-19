@@ -23,8 +23,9 @@ describe 'Tiler', ->
       describe 'reverseSupport', ->
         before ->
           $('#reverse-support').tiler
-            initialTile: 1
+            initialTile: 2
             reverseSupport: true
+          $('#reverse-support').tiler('goTo', 1)
 
         it 'should set the reverse classes', ->
           expect($('#reverse-support #tile-1').hasClass('exit')).to.be.true

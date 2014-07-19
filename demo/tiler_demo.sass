@@ -28,7 +28,7 @@ html, body
 
   .tiler-tile
     z-index: 1
-    transition-duration: 0.5s
+    transition-duration: 0.2s
     transition-property: left, top
     transition-timing-function: linear
 
@@ -73,10 +73,10 @@ html, body
         &.start
           left: 100%
         &.end
-          left: 0
+          left: 0%
       &.exit
         &.start
-          left: 0
+          left: 0%
         &.end
           left: -100%
     &.slide-right
@@ -84,10 +84,10 @@ html, body
         &.start
           left: -100%
         &.end
-          left: 0
+          left: 0%
       &.exit
         &.start
-          left: 0
+          left: 0%
         &.end
           left: 100%
     &.slide-up
@@ -95,10 +95,10 @@ html, body
         &.start
           top: 100%
         &.end
-          top: 0
+          top: 0%
       &.exit
         &.start
-          top: 0
+          top: 0%
         &.end
           top: -100%
     &.slide-down
@@ -106,9 +106,9 @@ html, body
         &.start
           top: -100%
         &.end
-          top: 0
+          top: 0%
       &.exit
         &.start
-          top: 0
+          top: 0%
         &.end
           top: 100%

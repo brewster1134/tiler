@@ -53,7 +53,8 @@
       $exitTile = @$tiles.eq(Math.max(0, @$currentTileId - 1))
 
       # hide all uninvolved tiles
-      @$tiles.not($exitTile).not($enterTile).hide()
+      @$tiles.not($exitTile).not($enterTile).css
+        zIndex: '-1'
 
       # manage css classes if an one is specified
       @_transitionCss $enterTile, $exitTile
@@ -109,7 +110,8 @@
       $exitTile.css
         transition: $exitTile.data 'tiler-transition'
         transitionDuration: $exitTile.data 'tiler-transition-duration'
-      $exitTile.show()
+      $exitTile.css
+        zIndex: ''
 
       # trigger the end position
       $exitTile.switchClass exitTileInitialPosition, exitTileFinalPosition
@@ -131,7 +133,8 @@
       $enterTile.css
         transition: $enterTile.data 'tiler-transition'
         transitionDuration: $enterTile.data 'tiler-transition-duration'
-      $enterTile.show()
+      $enterTile.css
+        zIndex: ''
 
       # trigger the end position
       $enterTile.addClass 'active'

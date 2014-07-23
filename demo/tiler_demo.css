@@ -22,9 +22,8 @@ html, body {
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 2; }
+    z-index: 1; }
   .tiler-viewport .tiler-tile {
-    z-index: 1;
     transition-duration: 0.2s;
     transition-property: left, top;
     transition-timing-function: linear; }

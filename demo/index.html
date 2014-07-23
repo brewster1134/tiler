@@ -1,13 +1,8 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <title>Tiler</title>
-    <link type="text/css" rel="stylesheet" media="all" href="../dist/tiler.css"/>
+    <title>tiler</title>
+    <link type="text/css" rel="stylesheet" media="all" href="../lib/tiler.css"/>
     <link type="text/css" rel="stylesheet" media="all" href="tiler_demo.css"/>
-    <style>
-    </style>
-
-    <script src="../vendor/modernizr/modernizr.js"></script>
   </head>
   <body>
     <div class="tiler-viewport" id="background">
@@ -74,56 +69,11 @@
       <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-active-class="slide-up"></div>
       <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-active-class="slide-left"></div>
     </div>
-  </div>
-</body>
+  </body>
 
   <script src="../vendor/jquery/dist/jquery.js"></script>
   <script src="../vendor/jquery-ui/ui/effect.js"></script>
   <script src="../vendor/jquery-ui/ui/widget.js"></script>
-  <script type="text/javascript" src="../dist/tiler.js"></script>
-  <script>
-    (function($) {
-      $(window).load(function() {
-
-        // event to set background
-        $('#background').on('tiler.goto', function(e, data) {
-          var bgpos, x, y;
-          bgpos = (function() {
-            switch (data.enterTile.attr('id')) {
-              case 'tile-1':
-                x = 0;
-                return y = 100;
-              case 'tile-2':
-                x = 50;
-                return y = 100;
-              case 'tile-3':
-                x = 50;
-                return y = 50;
-              case 'tile-4':
-                x = 50;
-                return y = 0;
-            }
-          }).call(this);
-          return $(this).closest('.tiler-viewport').css({
-            backgroundPosition: "" + x + "% " + y + "%"
-          });
-        });
-
-        // initalize tiler
-        $('.tiler-viewport').tiler()
-
-        // set the button text to match the tile title
-        $('button[data-tiler-title]').each(function() {
-          return $(this).text($(this).data('tiler-title'));
-        });
-
-        // go to a tile on click based on the link id
-        $('button').click(function() {
-          tileId = $(this).data('tiler-link-id');
-          $(this).closest('.tiler-viewport').tiler('goTo', tileId);
-        });
-
-      });
-    })(jQuery);
-  </script>
+  <script type="text/javascript" src="../lib/tiler.js"></script>
+  <script type="text/javascript" src="tiler_demo.js"></script>
 </html>

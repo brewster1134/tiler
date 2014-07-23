@@ -1,15 +1,20 @@
 test_page: spec/index.html
-before_tests: coffee -o dist/ -c src/tiler.coffee && coffee -o .tmp/ -c spec/tiler_spec.coffee && bundle exec sass src/tiler.sass dist/tiler.css && bundle exec sass spec/tiler_spec.sass .tmp/tiler_spec.css && bundle exec sass demo/tiler_demo.sass demo/tiler_demo.css
+before_tests: bundle exec coffee -co lib src/*.coffee
+  && bundle exec coffee -co .tmp spec/*.coffee
+  && bundle exec coffee -c demo/*.coffee
+  && bundle exec sass --update src:lib
+  && bundle exec sass --update spec:.tmp
+  && bundle exec sass --update demo:demo
 src_files:
-  - demo/tiler_demo.sass
+  - demo/*.sass
+  - spec/*_spec.coffee
+  - spec/*_spec.sass
   - spec/index.html
-  - spec/tiler_spec.coffee
-  - spec/tiler_spec.sass
-  - src/tiler.coffee
-  - src/tiler.sass
+  - src/*.coffee
+  - src/*.sass
 serve_files:
   - .tmp/*.js
-  - dist/*.js
+  - lib/*.js
 launch_in_dev:
   - phantomjs
 launch_in_ci:

@@ -1,13 +1,12 @@
-<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="/vendor/mocha/mocha.css">
-    <link rel="stylesheet" href="/dist/tiler.css">
+    <link rel="stylesheet" href="/lib/tiler.css">
     <link rel="stylesheet" href="/.tmp/tiler_spec.css">
-    <script src="/vendor/modernizr/modernizr.js"></script>
   </head>
+
   <body>
-    <div id="mocha"></div>
+    <div id='mocha'></div>
 
     <!-- initialize -->
     <div class="tiler-viewport" id="initialize">
@@ -56,10 +55,11 @@
     mocha.setup('bdd');
     window.expect = chai.expect;
   </script>
-  <script src="/dist/tiler.js"></script>
+
+  <script src="/lib/tiler.js"></script>
   <script src="/.tmp/tiler_spec.js"></script>
+
   <script>
     mocha.run()
   </script>
 </html>
-

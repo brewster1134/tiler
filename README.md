@@ -1,54 +1,43 @@
 # I'm Tiler.  I'm Perfect.
-
 ![Tiler](http://i.imgur.com/Kt5fVtz.gif)
 
-## Support
-
 ## Dependencies
+* jquery
+* jquery ui
 
-* [jQuery](http://jquery.com) version 1.8.0 or greater
-* [jQuery UI Widget](http://jqueryui.com/widget/)
-* jQuery UI Effects Core
+## Usage
 
-## Getting Started
-Install with bower
+#### Methods
 
-`bower install git@github.com:brewster1134/tiler.git -S`
+###### METHOD NAME
+_METHOD DESCRIPTION_
+> _Arguments_
+```yaml
+argument: Argument description # default:
+```
 
-Or...
-Download the [JS][js]
-Download the [CSS][css]
-
-[js]: https://raw.github.com/brewster1134/tiler/master/dist/tiler.js
-[css]: https://raw.github.com/brewster1134/tiler/master/dist/tiler.css
-
-#### HTML
-
-#### JS
-
-#### Demo
-
-A full working demo is available at `demo/index.html`
+---
+> _example_
+```coffee
+METHOD ARGUMENT
+```
 
 ## Development
+
 ### Dependencies
 
 ```shell
 gem install yuyi
-yuyi https://raw.githubusercontent.com/brewster1134/tiler/master/yuyi_menu
+yuyi -m https://raw.githubusercontent.com/brewster1134/tiler/master/yuyi_menu
 bundle install
 npm install
 bower install
 ```
 
-Do **NOT** modify any files in the `dist` directory!  Modify the files in the `src` directory and compile them into the dist directory.
+Do **NOT** modify any `.js` files!  Modify the coffee files in the `src` directory.  Guard will watch for changes and compile them to the `lib` directory.
 
-This will be done automatically if you are running the tests with testem _(see the [Testing](#testing) section below)_
-
-## Testing
-
+### Compiling & Testing
 Run `testem`
 
-## Release History
-
-## TODO
+## To-Do
+*

@@ -2,17 +2,19 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * Copyright (c) 2014 Ryan Brewster
+# * @version 0.0.1
+# * @author Ryan Brewster
+# * Copyright (c) 2014
 # * Licensed under the MIT license.
 ###
 
 ((root, factory) ->
   if typeof define == 'function' && define.amd
     define [
-        'jquery'
-        'widget'
-        'effect'
-      ], ($) ->
+      'jquery'
+      'widget'
+      'effect'
+    ], ($) ->
       factory $
   else
     factory jQuery

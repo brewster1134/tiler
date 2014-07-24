@@ -24,6 +24,7 @@
     widgetEventPrefix: 'tiler'
     options:
       initialTile: 1
+      animateInitialTile: false
       reverseSupport: true
 
     _create: ->
@@ -33,7 +34,10 @@
     _init: ->
       @_sizeTiles()
       @_buildLinks()
-      @goTo @options.initialTile, null
+
+      # pass correct active class if animating initial tile
+      animate = if @options.animateInitialTile then false else null
+      @goTo @options.initialTile, animate
 
     # PUBLIC METHODS
     #

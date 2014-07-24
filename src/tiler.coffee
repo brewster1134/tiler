@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 0.0.1
+# * @version 0.0.2
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -33,11 +33,11 @@
     _init: ->
       @_sizeTiles()
       @_buildLinks()
-      @goTo @options.initialTile
+      @goTo @options.initialTile, null
 
     # PUBLIC METHODS
     #
-    goTo: (idOrRow) ->
+    goTo: (idOrRow, activeClass) ->
       # detect tile id or coordinates
       if typeof idOrRow == 'string'
         $tile = @$tiles.filter("##{idOrRow}")
@@ -52,12 +52,20 @@
       $enterTile = $tile
       $exitTile = @$tiles.eq(Math.max(0, @$currentTileId - 1))
 
-      # hide all uninvolved tiles
-      @$tiles.not($exitTile).not($enterTile).css
-        zIndex: '-1'
+      # allow null or empty strings to be a valid active class
+      activeClass = 'no-active-class' if activeClass == null || activeClass == ''
+      enterTileClass = activeClass || $enterTile.data('tiler-active-class') || ''
+
+      # order tiles
+      $enterTile.css
+        zIndex: 2
+      $exitTile.css
+        zIndex: 1
+      @$tiles.not($enterTile).not($exitTile).css
+        zIndex: -1
 
       # manage css classes if an one is specified
-      @_transitionCss $enterTile, $exitTile
+      @_transitionCss $enterTile, $exitTile, enterTileClass
 
       # fire js events
       # @element.trigger 'tiler.goto', $enterTile.attr('id'), $exitTile.attr('id')
@@ -70,29 +78,28 @@
 
       return $enterTile
 
-    _transitionCss: ($enterTile, $exitTile) ->
-      enterTileClass = $enterTile.data('tiler-active-class') || ''
+    _transitionCss: ($enterTile, $exitTile, enterTileClass) ->
       enterTileId = @$tiles.index($enterTile, $exitTile) + 1
 
       # determine the direction of animation
       #
       if !@options.reverseSupport || @_isNavigatingForward(enterTileId)
-        exitTileInitialState = 'exit'
-        exitTileInitialPosition = 'start'
-        exitTileFinalPosition = 'end'
+        exitTileInitialState      = 'exit'
+        exitTileInitialPosition   = 'start'
+        exitTileFinalPosition     = 'end'
 
-        enterTileInitialState = 'enter'
-        enterTileInitialPosition = 'start'
-        enterTileFinalPosition = 'end'
+        enterTileInitialState     = 'enter'
+        enterTileInitialPosition  = 'start'
+        enterTileFinalPosition    = 'end'
 
       else
-        exitTileInitialState = 'enter'
-        exitTileInitialPosition = 'end'
-        exitTileFinalPosition = 'start'
+        exitTileInitialState      = 'enter'
+        exitTileInitialPosition   = 'end'
+        exitTileFinalPosition     = 'start'
 
-        enterTileInitialState = 'exit'
-        enterTileInitialPosition = 'end'
-        enterTileFinalPosition = 'start'
+        enterTileInitialState     = 'exit'
+        enterTileInitialPosition  = 'end'
+        enterTileFinalPosition    = 'start'
 
 
       # EXIT TILE
@@ -110,8 +117,6 @@
       $exitTile.css
         transition: $exitTile.data 'tiler-transition'
         transitionDuration: $exitTile.data 'tiler-transition-duration'
-      $exitTile.css
-        zIndex: ''
 
       # trigger the end position
       $exitTile.switchClass exitTileInitialPosition, exitTileFinalPosition
@@ -133,8 +138,6 @@
       $enterTile.css
         transition: $enterTile.data 'tiler-transition'
         transitionDuration: $enterTile.data 'tiler-transition-duration'
-      $enterTile.css
-        zIndex: ''
 
       # trigger the end position
       $enterTile.addClass 'active'

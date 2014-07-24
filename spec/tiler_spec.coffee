@@ -42,10 +42,22 @@ describe 'Tiler', ->
       $('#go-to').on 'tiler.goto', (e, data) ->
         eventSpy data.enterTile.attr('id'), data.exitTile.attr('id')
 
-      $('#go-to').tiler('goTo', 2)
+    after ->
+      eventSpy.reset()
 
-    it 'should activate the tile', ->
-      expect($('#go-to #tile-2').hasClass('active')).to.be.true
+    context 'without an active class', ->
+      before ->
+        $('#go-to').tiler('goTo', 2)
 
-    it 'should fire an event', ->
-      expect(eventSpy).to.be.calledWith 'tile-2', 'tile-1'
+      it 'should activate the tile', ->
+        expect($('#go-to #tile-2').hasClass('active')).to.be.true
+
+      it 'should fire an event', ->
+        expect(eventSpy).to.be.calledWith 'tile-2', 'tile-1'
+
+    context 'with an active class', ->
+      before ->
+        $('#go-to').tiler('goTo', 1, 'foo-animation')
+
+      it 'should add the active class', ->
+        expect($('#go-to #tile-1').hasClass('foo-animation')).to.be.true

@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 0.0.3
+# * @version 0.1.0
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -150,8 +150,8 @@
     # find possible lins throughout the entire page and set meta data on them
     #
     _buildLinks: ->
-      $('[data-tiler-link-id]').each ->
-        tileId = $(@).data('tiler-link-id').split(':')
+      $('[data-tiler-link]').each ->
+        tileId = $(@).data('tiler-link').split(':')
 
         # check for tiler namespace
         if tileId.length == 2

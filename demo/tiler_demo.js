@@ -25,12 +25,12 @@
       });
     });
     $('.tiler-viewport').tiler();
-    $('button[data-tiler-title]').each(function() {
+    $('button[data-tiler-link]').each(function() {
       return $(this).text($(this).data('tiler-title'));
     });
     return $('button').click(function() {
       var tileId;
-      tileId = $(this).data('tiler-link-id');
+      tileId = $(this).data('tiler-link');
       return $(this).closest('.tiler-viewport').tiler('goTo', tileId);
     });
   });

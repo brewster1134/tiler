@@ -22,10 +22,10 @@ $ ->
   $('.tiler-viewport').tiler()
 
   # set the button text to match the tile title
-  $('button[data-tiler-title]').each ->
+  $('button[data-tiler-link]').each ->
     $(@).text($(@).data('tiler-title'))
 
   # go to a tile on click based on the link id
   $('button').click ->
-    tileId = $(@).data('tiler-link-id')
+    tileId = $(@).data('tiler-link')
     $(@).closest('.tiler-viewport').tiler('goTo', tileId)

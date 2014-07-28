@@ -8,8 +8,9 @@ describe 'Tiler', ->
       expect($('#initialize .tiler-tile').css('height')).to.equal('200px')
 
     describe '_buildLinks', ->
-      it 'should add the title to the link', ->
+      it 'should add tile data to the link', ->
         expect($('button').data('tiler-title')).to.equal 'Tile 1'
+        expect($('button').data('tiler-foo')).to.equal 'Foo 1'
 
     context 'with option', ->
       describe 'initialTile', ->

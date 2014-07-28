@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 0.0.2
+# * @version 0.0.3
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -114,13 +114,13 @@
       # set enter tile start position
       # backup any transition data.  we need to set a start position without any animations
       #
-      $exitTile.data 'tiler-transition', $exitTile.css('transition')
-      $exitTile.data 'tiler-transition-duration', $exitTile.css('transition-duration')
+      $exitTile.data 'tilerTransition', $exitTile.css('transition')
+      $exitTile.data 'tilerTransitionDuration', $exitTile.css('transition-duration')
       $exitTile.css 'transition-duration', 0
       $exitTile.addClass exitTileInitialPosition
       $exitTile.css
-        transition: $exitTile.data 'tiler-transition'
-        transitionDuration: $exitTile.data 'tiler-transition-duration'
+        transition: $exitTile.data 'tilerTransition'
+        'transition-duration': $exitTile.data 'tilerTransitionDuration'
 
       # trigger the end position
       $exitTile.switchClass exitTileInitialPosition, exitTileFinalPosition
@@ -135,13 +135,13 @@
       # set enter tile start position
       # backup any transition data.  we need to set a start position without any animations
       #
-      $enterTile.data 'tiler-transition', $enterTile.css('transition')
-      $enterTile.data 'tiler-transition-duration', $enterTile.css('transition-duration')
+      $enterTile.data 'tilerTransition', $enterTile.css('transition')
+      $enterTile.data 'tilerTransitionDuration', $enterTile.css('transition-duration')
       $enterTile.css 'transition-duration', 0
       $enterTile.addClass enterTileInitialPosition
       $enterTile.css
-        transition: $enterTile.data 'tiler-transition'
-        transitionDuration: $enterTile.data 'tiler-transition-duration'
+        transition: $enterTile.data 'tilerTransition'
+        'transition-duration': $enterTile.data 'tilerTransitionDuration'
 
       # trigger the end position
       $enterTile.addClass 'active'
@@ -150,8 +150,6 @@
     # find possible lins throughout the entire page and set meta data on them
     #
     _buildLinks: ->
-      _this = @
-
       $('[data-tiler-link-id]').each ->
         tileId = $(@).data('tiler-link-id').split(':')
 
@@ -162,11 +160,15 @@
         else
           tileInstance = $(".tiler-tile##{tileId[0]}")
 
-        # get tile title
-        tileTitle = tileInstance.data('tiler-title')
+        # get tile data
+        tileData = tileInstance.data()
 
-        # set tile title to link
-        $(@).attr 'data-tiler-title', tileTitle
+        # remove reserved attributes
+        delete tileData['tilerTransition']
+        delete tileData['tilerTransitionDuration']
+
+        # apply data to link
+        $.extend $(@).data(), tileData
 
     # match all the tiles to the size of the viewport
     #

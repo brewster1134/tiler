@@ -41,20 +41,23 @@
 
     # PUBLIC METHODS
     #
-    goTo: (idOrRow, activeClass) ->
+    goTo: (idOrEl, activeClass) ->
       # detect tile id or coordinates
-      if typeof idOrRow == 'string'
-        $tile = @$tiles.filter("##{idOrRow}")
+      if typeof idOrEl == 'string'
+        $tile = @$tiles.filter("##{idOrEl}")
         tileId = @$tiles.index($tile) + 1
       else
-        $tile = @$tiles.eq(idOrRow - 1)
-        tileId = idOrRow
+        $tile = @$tiles.eq(idOrEl - 1)
+        tileId = idOrEl
 
       # return if we are already on that tile
       return if @$currentTileId == tileId
 
       $enterTile = $tile
       $exitTile = @$tiles.eq(Math.max(0, @$currentTileId - 1))
+
+      # set the active tile id to the viewport
+      @element.attr 'data-tiler-active-tile', $enterTile.attr('id')
 
       # allow null or empty strings to be a valid active class
       activeClass = 'no-active-class' if activeClass == null || activeClass == ''

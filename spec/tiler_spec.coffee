@@ -46,6 +46,9 @@ describe 'Tiler', ->
     after ->
       eventSpy.reset()
 
+    it 'should set the active tile id on the viewport', ->
+      expect($('#go-to').attr('data-tiler-active-tile')).to.equal 'tile-1'
+
     context 'without an active class', ->
       before ->
         $('#go-to').tiler('goTo', 2)

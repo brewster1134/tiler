@@ -6,20 +6,65 @@
 * jquery ui
 
 ## Usage
+#### Tiles Markup
+```html
+<div class="tiler-viewport">
+  <div class="tiler-tile" id="tile-1"></div>
+  <div class="tiler-tile" id="tile-2"></div>
+</div>
+```
+
+#### CTA Markup
+```html
+<a data-tiler-link="tile-1"></a>
+```
+
+Any data attributes prefixed with `tiler` on the `.tiler-tile` elements, will be availble to the CTAs.
+
+```html
+<a class="tiler-link" data-tiler-link="tile-1"></a>
+<div class="tiler-viewport">
+  <div class="tiler-tile" id="tile-1" data-tiler-title="Tile One"></div>
+</div>
+```
+
+```coffee
+# sets the text of the CTA to match the title of the tile it links to
+$('a.tiler-link').each ->
+  $(@).text($(@).data('tiler-title'))
+```
 
 #### Methods
 
-###### METHOD NAME
-_METHOD DESCRIPTION_
+###### goTo
+Navigate to a given tile based on it's ID or an index
 > _Arguments_
 ```yaml
-argument: Argument description # default:
+idOrIndex: html id value or index value (starts at 1 not 0)
 ```
 
 ---
 > _example_
+```haml
+.tiler-viewport
+  .tiler-tile#tile-1
+```
+
 ```coffee
-METHOD ARGUMENT
+# with ID
+$('.tiler-viewport').tiler('goTo', 'tile-1')
+
+# with index
+$('.tiler-viewport').tiler('goTo', 1)
+```
+
+###### REFRESH
+If the size of your tiler-viewport changes, you will need to refresh the containting tiles
+
+---
+> _example_
+```coffee
+$('.tiler-viewport').tiler('refresh')
 ```
 
 ## Development
@@ -38,6 +83,3 @@ Do **NOT** modify any `.js` files!  Modify the coffee files in the `src` directo
 
 ### Compiling & Testing
 Run `testem`
-
-## To-Do
-*

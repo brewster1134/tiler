@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 0.1.0
+# * @version 0.1.1
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -21,6 +21,13 @@
 ) @, ($) ->
 
   $.widget 'ui.tiler',
+
+
+    #
+    # WIDGET SETUP/METHODS
+    #
+
+
     widgetEventPrefix: 'tiler'
     options:
       initialTile: 1
@@ -29,9 +36,9 @@
 
     _create: ->
       @$currentTileId = 0
-      @$tiles = $('.tiler-tile', @element)
 
     _init: ->
+      @$tiles = $('.tiler-tile', @element)
       @_sizeTiles()
       @_buildLinks()
 
@@ -39,16 +46,20 @@
       animate = if @options.animateInitialTile then false else null
       @goTo @options.initialTile, animate
 
+
+    #
     # PUBLIC METHODS
     #
-    goTo: (idOrEl, activeClass) ->
+
+
+    goTo: (idOrIndex, activeClass) ->
       # detect tile id or coordinates
-      if typeof idOrEl == 'string'
-        $tile = @$tiles.filter("##{idOrEl}")
+      if typeof idOrIndex == 'string'
+        $tile = @$tiles.filter("##{idOrIndex}")
         tileId = @$tiles.index($tile) + 1
       else
-        $tile = @$tiles.eq(idOrEl - 1)
-        tileId = idOrEl
+        $tile = @$tiles.eq(idOrIndex - 1)
+        tileId = idOrIndex
 
       # return if we are already on that tile
       return if @$currentTileId == tileId
@@ -84,6 +95,15 @@
       @$currentTileId = tileId
 
       return $enterTile
+
+    refresh: -> @_sizeTiles()
+
+
+
+    #
+    # PRIVATE METHODS
+    #
+
 
     _transitionCss: ($enterTile, $exitTile, enterTileClass) ->
       enterTileId = @$tiles.index($enterTile, $exitTile) + 1

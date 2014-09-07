@@ -5,12 +5,11 @@ html, body
   margin: 0
 
 .tiler-viewport
-  height: 200px
-  width: 100%
-  margin-bottom: 20px
+  height: 50%
+  width: 50%
+  float: left
 
   &#background
-    height: 50%
     transition-duration: 0.5s
     transition-property: background-position
     transition-timing-function: linear
@@ -18,7 +17,7 @@ html, body
     background-image: url(mountain.jpg)
     background-position: 0% 100%
     .tiler-tile
-      background-color: transparent !important
+      background: transparent !important
 
   .buttons
     position: absolute
@@ -27,12 +26,14 @@ html, body
     z-index: 3
 
   .tiler-tile
+    background-position: center
     &#tile-1
-      background: #d6d7ef
+      background-image: url(mountain.jpg)
     &#tile-2
       background: #8d8fd3
     &#tile-3
-      background: #4549b5
+      background-image: url(mountain.jpg)
+      transform: rotate(180deg)
     &#tile-4
       background: #292B6B
 

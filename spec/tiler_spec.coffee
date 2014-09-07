@@ -4,8 +4,12 @@ describe 'Tiler', ->
       $('#initialize').tiler()
 
     it 'should size the tiles', ->
-      expect($('#initialize .tiler-tile').css('width')).to.equal('200px')
-      expect($('#initialize .tiler-tile').css('height')).to.equal('200px')
+      expect($('#initialize > .tiler-tile').css('width')).to.equal '200px'
+      expect($('#initialize > .tiler-tile').css('height')).to.equal '200px'
+
+    it 'should not include tiles from nested tiler instances', ->
+      expect($('#initialize > .tiler-tile').data 'tiler-viewport-id').to.equal 'initialize'
+      expect($('#initialize-nested > .tiler-tile').data 'tiler-viewport-id').to.not.equal 'initialize'
 
     describe '_buildLinks', ->
       it 'should add tile data to the link', ->
@@ -13,19 +17,11 @@ describe 'Tiler', ->
         expect($('button').data('tiler-foo')).to.equal 'Foo 1'
 
     context 'with option', ->
-      describe 'initialTile', ->
-        before ->
-          $('#initial-tile').tiler
-            initialTile: 1
-
-        it 'should activate the initial tile', ->
-          expect($('#initial-tile #tile-1').hasClass('active')).to.be.true
-
       describe 'reverseSupport', ->
         before ->
           $('#reverse-support').tiler
-            initialTile: 2
             reverseSupport: true
+          $('#reverse-support').tiler('goTo', 2)
           $('#reverse-support').tiler('goTo', 1)
 
         it 'should set the reverse classes', ->
@@ -36,8 +32,8 @@ describe 'Tiler', ->
     eventSpy = sinon.spy()
 
     before ->
-      $('#go-to').tiler
-        initialTile: 1
+      $('#go-to').tiler()
+      $('#go-to').tiler('goTo', 1)
 
       # setup event after initialize to only test the event being called on the goTo call
       $('#go-to').on 'tiler.goto', (e, data) ->

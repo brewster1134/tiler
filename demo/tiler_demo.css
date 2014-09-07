@@ -5,11 +5,10 @@ html, body {
   margin: 0; }
 
 .tiler-viewport {
-  height: 200px;
-  width: 100%;
-  margin-bottom: 20px; }
+  height: 50%;
+  width: 50%;
+  float: left; }
   .tiler-viewport#background {
-    height: 50%;
     transition-duration: 0.5s;
     transition-property: background-position;
     transition-timing-function: linear;
@@ -17,38 +16,41 @@ html, body {
     background-image: url(mountain.jpg);
     background-position: 0% 100%; }
     .tiler-viewport#background .tiler-tile {
-      background-color: transparent !important; }
+      background: transparent !important; }
   .tiler-viewport .buttons {
     position: absolute;
     top: 0;
     right: 0;
     z-index: 3; }
-  .tiler-viewport .tiler-tile#tile-1 {
-    background: #d6d7ef; }
-  .tiler-viewport .tiler-tile#tile-2 {
-    background: #8d8fd3; }
-  .tiler-viewport .tiler-tile#tile-3 {
-    background: #4549b5; }
-  .tiler-viewport .tiler-tile#tile-4 {
-    background: #292b6b; }
-  .tiler-viewport .tiler-tile.active span {
-    opacity: 1; }
-    .tiler-viewport .tiler-tile.active span#box-1 {
-      transition-delay: 0.5s;
-      transform: scale(1.3, 1.3) translate(20px, 20px) rotate(45deg); }
-    .tiler-viewport .tiler-tile.active span#box-2 {
-      transition-delay: 1s;
-      transform: scale(1.6, 1.6) translate(30px, 30px) rotate(45deg); }
-    .tiler-viewport .tiler-tile.active span#box-3 {
-      transition-delay: 1.5s;
-      transform: scale(1.9, 1.9) translate(40px, 40px) rotate(45deg); }
-  .tiler-viewport .tiler-tile span {
-    transition-duration: 0.5s;
-    transition-property: opacity, transform;
-    transition-timing-function: linear;
-    height: 50px;
-    width: 50px;
-    background: white;
-    border: 3px solid black;
-    display: inline-block;
-    opacity: 0; }
+  .tiler-viewport .tiler-tile {
+    background-position: center; }
+    .tiler-viewport .tiler-tile#tile-1 {
+      background-image: url(mountain.jpg); }
+    .tiler-viewport .tiler-tile#tile-2 {
+      background: #8d8fd3; }
+    .tiler-viewport .tiler-tile#tile-3 {
+      background-image: url(mountain.jpg);
+      transform: rotate(180deg); }
+    .tiler-viewport .tiler-tile#tile-4 {
+      background: #292b6b; }
+    .tiler-viewport .tiler-tile.active span {
+      opacity: 1; }
+      .tiler-viewport .tiler-tile.active span#box-1 {
+        transition-delay: 0.5s;
+        transform: scale(1.3, 1.3) translate(20px, 20px) rotate(45deg); }
+      .tiler-viewport .tiler-tile.active span#box-2 {
+        transition-delay: 1s;
+        transform: scale(1.6, 1.6) translate(30px, 30px) rotate(45deg); }
+      .tiler-viewport .tiler-tile.active span#box-3 {
+        transition-delay: 1.5s;
+        transform: scale(1.9, 1.9) translate(40px, 40px) rotate(45deg); }
+    .tiler-viewport .tiler-tile span {
+      transition-duration: 0.5s;
+      transition-property: opacity, transform;
+      transition-timing-function: linear;
+      height: 50px;
+      width: 50px;
+      background: white;
+      border: 3px solid black;
+      display: inline-block;
+      opacity: 0; }

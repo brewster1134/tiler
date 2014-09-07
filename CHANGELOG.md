@@ -4,3 +4,7 @@
 
 ###### 0.1.1
 * added refresh method
+
+###### 0.2.0
+* support for nesting tiler instances inside other tiler instances
+* removed auto animating on init

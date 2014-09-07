@@ -1,4 +1,18 @@
 $ ->
+
+  # initalize tiler
+  $('.tiler-viewport').each ->
+    $(@).tiler().tiler('goTo', 1)
+
+  # set the button text to match the tile title
+  $('button[data-tiler-link]').each ->
+    $(@).text($(@).data('tiler-title'))
+
+  # go to a tile on click based on the link id
+  $('button').click ->
+    tileId = $(@).data('tiler-link')
+    $(@).closest('.tiler-viewport').tiler('goTo', tileId)
+
   # event to set background
   $('#background').on 'tiler.goto', (e, data) ->
     switch data.enterTile.attr('id')
@@ -17,15 +31,3 @@ $ ->
 
     $(@).closest('.tiler-viewport').css
       backgroundPosition: "#{x}% #{y}%"
-
-  # initalize tiler
-  $('.tiler-viewport').tiler()
-
-  # set the button text to match the tile title
-  $('button[data-tiler-link]').each ->
-    $(@).text($(@).data('tiler-title'))
-
-  # go to a tile on click based on the link id
-  $('button').click ->
-    tileId = $(@).data('tiler-link')
-    $(@).closest('.tiler-viewport').tiler('goTo', tileId)

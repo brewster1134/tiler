@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 0.1.1
+# * @version 0.2.0
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -26,31 +26,24 @@
     #
     # WIDGET SETUP/METHODS
     #
-
-
     widgetEventPrefix: 'tiler'
     options:
-      initialTile: 1
-      animateInitialTile: false
       reverseSupport: true
 
     _create: ->
       @$currentTileId = 0
 
     _init: ->
-      @$tiles = $('.tiler-tile', @element)
-      @_sizeTiles()
-      @_buildLinks()
-
-      # pass correct active class if animating initial tile
-      animate = if @options.animateInitialTile then false else null
-      @goTo @options.initialTile, animate
+      # collect all the tiles, except for those nested inside another tiler instance
+      @$tiles = $('.tiler-tile', @element).not(@element.find('.tiler-viewport .tiler-tile'))
+      @_setupTiles()
+      @_setupLinks()
 
 
     #
     # PUBLIC METHODS
     #
-
+    refresh: -> @_init()
 
     goTo: (idOrIndex, activeClass) ->
       # detect tile id or coordinates
@@ -96,15 +89,10 @@
 
       return $enterTile
 
-    refresh: -> @_sizeTiles()
-
-
 
     #
     # PRIVATE METHODS
     #
-
-
     _transitionCss: ($enterTile, $exitTile, enterTileClass) ->
       enterTileId = @$tiles.index($enterTile, $exitTile) + 1
 
@@ -172,7 +160,7 @@
 
     # find possible lins throughout the entire page and set meta data on them
     #
-    _buildLinks: ->
+    _setupLinks: ->
       $('[data-tiler-link]').each ->
         tileId = $(@).data('tiler-link').split(':')
 
@@ -195,7 +183,12 @@
 
     # match all the tiles to the size of the viewport
     #
-    _sizeTiles: ->
+    _setupTiles: ->
+      self = @
+
+      @$tiles.each ->
+        $(@).attr 'data-tiler-viewport-id', self.element.attr('id')
+
       @$tiles.css
         width: @element.outerWidth()
         height: @element.outerHeight()

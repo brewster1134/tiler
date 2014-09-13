@@ -8,3 +8,6 @@
 ###### 0.2.0
 * support for nesting tiler instances inside other tiler instances
 * removed auto animating on init
+
+###### 0.2.1
+* fire goto events on tiles: `tiler.enter` & `tiler.exit`

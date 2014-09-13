@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 0.2.0
+# * @version 0.2.1
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -79,10 +79,14 @@
       @_transitionCss $enterTile, $exitTile, enterTileClass
 
       # fire js events
-      # @element.trigger 'tiler.goto', $enterTile.attr('id'), $exitTile.attr('id')
+      # trigger on viewport
       @element.trigger 'tiler.goto',
         enterTile: $enterTile
         exitTile: $exitTile
+
+      # trigger on individual tiles
+      $enterTile.trigger 'tiler.enter'
+      $exitTile.trigger 'tiler.exit'
 
       # update the current tile id
       @$currentTileId = tileId

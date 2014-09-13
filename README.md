@@ -35,16 +35,14 @@ $('a.tiler-link').each ->
 ```
 
 #### Methods
-
 ###### goTo
 Navigate to a given tile based on it's ID or an index
 > _Arguments_
 ```yaml
 idOrIndex: html id value or index value (starts at 1 not 0)
 ```
-
 ---
-> _example_
+> _Usage_
 ```haml
 .tiler-viewport
   .tiler-tile#tile-1
@@ -52,19 +50,48 @@ idOrIndex: html id value or index value (starts at 1 not 0)
 
 ```coffee
 # with ID
-$('.tiler-viewport').tiler('goTo', 'tile-1')
+$('.tiler-viewport').tiler 'goTo', 'tile-1'
 
 # with index
-$('.tiler-viewport').tiler('goTo', 1)
+$('.tiler-viewport').tiler 'goTo', 1
 ```
 
-###### REFRESH
+###### refresh
 If the size of your tiler-viewport changes, you will need to refresh the containting tiles
 
 ---
-> _example_
+> _Usage_
 ```coffee
-$('.tiler-viewport').tiler('refresh')
+$('.tiler-viewport').tiler 'refresh'
+```
+
+#### Events
+###### tiler.goto
+Called on `.tiler-viweport`
+> _Data_
+```yaml
+enterTile: The currently active tile
+exitTile: The previously active tile
+```
+---
+> _Usage_
+```coffee
+$('.tiler-viewport').on 'tiler.goto', (e, data) ->
+  console.log data.enterTile, data.exitTile
+```
+
+###### tiler.enter
+Called on `.tiler-tile` when it becomes the active tile
+```coffee
+$('.tiler-tile').on 'tiler.enter', ->
+  console.log 'Tile Entered'
+```
+
+###### tiler.exit
+Called on `.tiler-tile` after being the active tile
+```coffee
+$('.tiler-tile').on 'tiler.exit', ->
+  console.log 'Tile Exited'
 ```
 
 ## Development

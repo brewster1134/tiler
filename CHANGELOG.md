@@ -11,3 +11,6 @@
 
 ###### 0.2.1
 * fire goto events on tiles: `tiler.enter` & `tiler.exit`
+
+###### 0.2.2
+* hide inactive tiles to prevent excessive browser re-paints

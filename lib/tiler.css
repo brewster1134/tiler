@@ -3,4 +3,5 @@
   position: relative; }
   .tiler-viewport .tiler-tile {
     overflow: hidden;
-    position: absolute; }
+    position: absolute;
+    width: 100%; }

@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 0.2.1
+# * @version 0.2.2
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -69,10 +69,13 @@
 
       # order tiles
       $enterTile.css
+        display: 'block'
         zIndex: 2
       $exitTile.css
+        display: 'block'
         zIndex: 1
       @$tiles.not($enterTile).not($exitTile).css
+        display: 'none'
         zIndex: -1
 
       # manage css classes if an one is specified

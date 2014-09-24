@@ -46,6 +46,7 @@
     refresh: ->
       @_init()
       @element.trigger 'tiler.refresh'
+      @$enterTile.trigger 'tiler.refresh'
 
     goTo: (idOrIndex, activeClass) ->
       # detect tile id or coordinates
@@ -59,51 +60,51 @@
       # return if we are already on that tile
       return if @$currentTileId == tileId
 
-      $enterTile = $tile
-      $exitTile = @$tiles.eq(Math.max(0, @$currentTileId - 1))
+      @$enterTile = $tile
+      @$exitTile = @$tiles.eq(Math.max(0, @$currentTileId - 1))
 
       # set the active tile id to the viewport
-      @element.attr 'data-tiler-active-tile', $enterTile.attr('id')
+      @element.attr 'data-tiler-active-tile', @$enterTile.attr('id')
 
       # allow null or empty strings to be a valid active class
-      activeClass = 'no-active-class' if activeClass == null || activeClass == ''
-      enterTileClass = activeClass || $enterTile.data('tiler-active-class') || ''
+      activeClass = 'no-active-class' unless activeClass
+      enterTileClass = activeClass || @$enterTile.data('tiler-active-class') || ''
 
       # order tiles
-      $enterTile.css
+      @$enterTile.css
         display: 'block'
         zIndex: 2
-      $exitTile.css
+      @$exitTile.css
         display: 'block'
         zIndex: 1
-      @$tiles.not($enterTile).not($exitTile).css
+      @$tiles.not(@$enterTile).not(@$exitTile).css
         display: 'none'
         zIndex: -1
 
       # manage css classes if an one is specified
-      @_transitionCss $enterTile, $exitTile, enterTileClass
+      @_transitionCss enterTileClass
 
       # fire js events
       # trigger on viewport
       @element.trigger 'tiler.goto',
-        enterTile: $enterTile
-        exitTile: $exitTile
+        enterTile: @$enterTile
+        exitTile: @$exitTile
 
       # trigger on individual tiles
-      $enterTile.trigger 'tiler.enter'
-      $exitTile.trigger 'tiler.exit'
+      @$enterTile.trigger 'tiler.enter'
+      @$exitTile.trigger 'tiler.exit'
 
       # update the current tile id
       @$currentTileId = tileId
 
-      return $enterTile
+      return @$enterTile
 
 
     #
     # PRIVATE METHODS
     #
-    _transitionCss: ($enterTile, $exitTile, enterTileClass) ->
-      enterTileId = @$tiles.index($enterTile, $exitTile) + 1
+    _transitionCss: (enterTileClass) ->
+      enterTileId = @$tiles.index(@$enterTile, @$exitTile) + 1
 
       # determine the direction of animation
       #
@@ -129,43 +130,43 @@
       # EXIT TILE
       #
       # reset
-      $exitTile.attr 'class', "tiler-tile #{exitTileInitialState} #{enterTileClass}"
+      @$exitTile.attr 'class', "tiler-tile #{exitTileInitialState} #{enterTileClass}"
 
       # set enter tile start position
       # backup any transition data.  we need to set a start position without any animations
       #
-      $exitTile.data 'tilerTransition', $exitTile.css('transition')
-      $exitTile.data 'tilerTransitionDuration', $exitTile.css('transition-duration')
-      $exitTile.css 'transition-duration', 0
-      $exitTile.addClass exitTileInitialPosition
-      $exitTile.css
-        transition: $exitTile.data 'tilerTransition'
-        'transition-duration': $exitTile.data 'tilerTransitionDuration'
+      @$exitTile.data 'tilerTransition', @$exitTile.css('transition')
+      @$exitTile.data 'tilerTransitionDuration', @$exitTile.css('transition-duration')
+      @$exitTile.css 'transition-duration', 0
+      @$exitTile.addClass exitTileInitialPosition
+      @$exitTile.css
+        transition: @$exitTile.data 'tilerTransition'
+        'transition-duration': @$exitTile.data 'tilerTransitionDuration'
 
       # trigger the end position
-      $exitTile.switchClass exitTileInitialPosition, exitTileFinalPosition
+      @$exitTile.switchClass exitTileInitialPosition, exitTileFinalPosition
 
 
       # ENTER TILE
       #
 
       # reset
-      $enterTile.attr 'class', "tiler-tile #{enterTileInitialState} #{enterTileClass}"
+      @$enterTile.attr 'class', "tiler-tile #{enterTileInitialState} #{enterTileClass}"
 
       # set enter tile start position
       # backup any transition data.  we need to set a start position without any animations
       #
-      $enterTile.data 'tilerTransition', $enterTile.css('transition')
-      $enterTile.data 'tilerTransitionDuration', $enterTile.css('transition-duration')
-      $enterTile.css 'transition-duration', 0
-      $enterTile.addClass enterTileInitialPosition
-      $enterTile.css
-        transition: $enterTile.data 'tilerTransition'
-        'transition-duration': $enterTile.data 'tilerTransitionDuration'
+      @$enterTile.data 'tilerTransition', @$enterTile.css('transition')
+      @$enterTile.data 'tilerTransitionDuration', @$enterTile.css('transition-duration')
+      @$enterTile.css 'transition-duration', 0
+      @$enterTile.addClass enterTileInitialPosition
+      @$enterTile.css
+        transition: @$enterTile.data 'tilerTransition'
+        'transition-duration': @$enterTile.data 'tilerTransitionDuration'
 
       # trigger the end position
-      $enterTile.addClass 'active'
-      $enterTile.switchClass enterTileInitialPosition, enterTileFinalPosition
+      @$enterTile.addClass 'active'
+      @$enterTile.switchClass enterTileInitialPosition, enterTileFinalPosition
 
     # find possible links throughout the entire page and set meta data on them
     #

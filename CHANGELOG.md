@@ -17,3 +17,6 @@
 
 ###### 0.2.3
 * tiler refresh event
+
+###### 0.2.4
+* tiler refresh event on active tile

@@ -14,3 +14,6 @@
 
 ###### 0.2.2
 * hide inactive tiles to prevent excessive browser re-paints
+
+###### 0.2.3
+* tiler refresh event

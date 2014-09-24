@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 0.2.2
+# * @version 0.2.3
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -43,7 +43,9 @@
     #
     # PUBLIC METHODS
     #
-    refresh: -> @_init()
+    refresh: ->
+      @_init()
+      @element.trigger 'tiler.refresh'
 
     goTo: (idOrIndex, activeClass) ->
       # detect tile id or coordinates
@@ -165,7 +167,7 @@
       $enterTile.addClass 'active'
       $enterTile.switchClass enterTileInitialPosition, enterTileFinalPosition
 
-    # find possible lins throughout the entire page and set meta data on them
+    # find possible links throughout the entire page and set meta data on them
     #
     _setupLinks: ->
       $('[data-tiler-link]').each ->

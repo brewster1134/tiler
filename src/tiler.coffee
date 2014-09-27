@@ -66,8 +66,8 @@
       # set the active tile id to the viewport
       @element.attr 'data-tiler-active-tile', @$enterTile.attr('id')
 
-      # allow null or empty strings to be a valid active class
-      activeClass = 'no-active-class' unless activeClass
+      # allow false to disable the active class
+      activeClass = 'no-active-class' if activeClass == false
       enterTileClass = activeClass || @$enterTile.data('tiler-active-class') || ''
 
       # order tiles

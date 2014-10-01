@@ -181,6 +181,8 @@
         else
           tileInstance = $(".tiler-tile##{tileId[0]}")
 
+        return unless tileInstance.length
+
         # get tile data
         tileData = tileInstance.data()
 

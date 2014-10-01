@@ -20,3 +20,10 @@
 
 ###### 0.2.4
 * tiler refresh event on active tile
+
+###### 0.2.5
+* disabled active class bug
+
+###### 0.2.6
+* smarter link builder
+* demo animation css bugfix

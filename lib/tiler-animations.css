@@ -1,6 +1,6 @@
 .tiler-tile {
-  transition-duration: 0.2s;
-  transition-property: left, top opacity;
+  transition-duration: 1s;
+  transition-property: left, top, opacity;
   transition-timing-function: linear; }
   .tiler-tile.slide-horizontal.enter.start {
     left: 100%; }
@@ -25,4 +25,4 @@
   .tiler-tile.fade.exit.start {
     opacity: 1; }
   .tiler-tile.fade.exit.end {
-    opacity: 0; }
+    opacity: 1; }

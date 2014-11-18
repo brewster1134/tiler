@@ -1,12 +1,14 @@
-// TILE ANIMATIONS
+// TILER ANIMATIONS
 //
 .tiler-tile
-  transition-duration: 1s
-  transition-property: left, top, opacity
+  transition-duration: 25s
   transition-timing-function: linear
 
   // slide left (slide in from the right)
   &.slide-horizontal
+    transition-property: left
+    top: 0
+
     &.enter
       &.start
         left: 100%
@@ -20,6 +22,9 @@
 
   // slide up (slide in from the bottom)
   &.slide-vertical
+    transition-property: top
+    left: 0
+
     &.enter
       &.start
         top: 100%
@@ -32,6 +37,10 @@
         top: -100%
 
   &.fade
+    transition-property: opacity
+    top: 0
+    left: 0
+
     &.enter
       &.start
         opacity: 0
@@ -42,3 +51,14 @@
         opacity: 1
       &.end
         opacity: 1
+    &.reverse
+      &.enter
+        &.start
+          opacity: 1
+        &.end
+          opacity: 1
+      &.exit
+        &.start
+          opacity: 1
+        &.end
+          opacity: 0

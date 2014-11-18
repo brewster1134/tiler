@@ -32,7 +32,7 @@ html, body {
       background-image: url(mountain.jpg);
       transform: rotate(180deg); }
     .tiler-viewport .tiler-tile#tile-4 {
-      background: #292b6b; }
+      background: #292B6B; }
     .tiler-viewport .tiler-tile.active span {
       opacity: 1; }
       .tiler-viewport .tiler-tile.active span#box-1 {

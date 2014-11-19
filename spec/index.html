@@ -32,6 +32,7 @@
     <!-- initialize : options : reverseSupport -->
     <div class="tiler-viewport" id="reverse-support">
       <div class="tiler-tile" id="tile-1"></div>
+      <div class="tiler-tile" id="tile-2"></div>
     </div>
 
     <!-- goTo -->
@@ -48,26 +49,45 @@
 
   </body>
 
-  <!-- Dependencies -->
-  <script src="/vendor/jquery/dist/jquery.js"></script>
-  <script src="/vendor/jquery-ui/ui/effect.js"></script>
-  <script src="/vendor/jquery-ui/ui/widget.js"></script>
+  <!-- Testing Dependencies -->
+  <script type="text/javascript" src="/vendor/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="/vendor/jquery-ui/ui/effect.js"></script>
+  <script type="text/javascript" src="/vendor/jquery-ui/ui/widget.js"></script>
+  <script type="text/javascript" src="/vendor/mocha/mocha.js"></script>
+  <script type="text/javascript" src="/vendor/chai/chai.js"></script>
 
-  <!-- Testing -->
-  <script src="/vendor/mocha/mocha.js"></script>
-  <script src="/vendor/chai/chai.js"></script>
-  <script src="/vendor/sinon/lib/sinon.js"></script>
-  <script src="/vendor/sinon/lib/sinon/call.js"></script>
-  <script src="/vendor/sinon/lib/sinon/spy.js"></script>
-  <script src="/vendor/sinon-chai/lib/sinon-chai.js"></script>
-  <script src="/testem.js"></script>
+  <!-- Sinon -->
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/util/core.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/extend.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/typeOf.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/times_in_words.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/spy.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/call.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/behavior.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/stub.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/mock.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/collection.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/assert.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/sandbox.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/test.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/test_case.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/match.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/format.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/log_error.js"></script>
+
+  <script type="text/javascript" src="/vendor/sinon-chai/lib/sinon-chai.js"></script>
+  <script type="text/javascript" src="/testem.js"></script>
   <script>
     mocha.setup('bdd');
     window.expect = chai.expect;
   </script>
 
-  <script src="/lib/tiler.js"></script>
-  <script src="/.tmp/tiler_spec.js"></script>
+  <!-- Footer Libraries -->
+  <script type="text/javascript" src="/lib/tiler.js"></script>
+
+  <!-- Specs -->
+  <script type="text/javascript" src="/.tmp/tiler_spec.js"></script>
 
   <script>
     mocha.run()

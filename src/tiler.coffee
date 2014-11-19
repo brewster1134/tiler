@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 0.2.3
+# * @version 1.0.0
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -21,8 +21,6 @@
 ) @, ($) ->
 
   $.widget 'ui.tiler',
-
-
     #
     # WIDGET SETUP/METHODS
     #
@@ -48,16 +46,23 @@
       @element.trigger 'tiler.refresh'
       @$enterTile.trigger 'tiler.refresh'
 
-    goTo: (idOrIndex, activeClass) ->
-      # detect tile id or coordinates
-      if typeof idOrIndex == 'string'
-        $tile = @$tiles.filter("##{idOrIndex}")
-        tileId = @$tiles.index($tile) + 1
+    goTo: (tile, animation) ->
+      # find tile
+      # tile id as string
+      $tile = if typeof tile == 'string'
+        @$tiles.filter("##{tile}")
+      # tile as jquery object
+      else if tile.jquery
+        tile.jquery
+      # tile as dom node
+      else if tile.nodeType
+        $(tile)
+      # tile as index (starting at 1)
       else
-        $tile = @$tiles.eq(idOrIndex - 1)
-        tileId = idOrIndex
+        @$tiles.eq(tile - 1)
 
       # return if we are already on that tile
+      tileId = @$tiles.index($tile) + 1
       return if @$currentTileId == tileId
 
       @$enterTile = $tile
@@ -66,9 +71,11 @@
       # set the active tile id to the viewport
       @element.attr 'data-tiler-active-tile', @$enterTile.attr('id')
 
-      # allow false to disable the active class
-      activeClass = 'no-active-class' if activeClass == false
-      enterTileClass = activeClass || @$enterTile.data('tiler-active-class') || ''
+      # Set tile class
+      animationClass = if animation == false
+        'no-active-class'
+      else
+        animation || @$enterTile.data('tiler-animation') || ''
 
       # order tiles
       @$enterTile.css
@@ -82,7 +89,7 @@
         zIndex: -1
 
       # manage css classes if an one is specified
-      @_transitionCss enterTileClass
+      @_transitionCss animationClass
 
       # fire js events
       # trigger on viewport
@@ -103,12 +110,19 @@
     #
     # PRIVATE METHODS
     #
-    _transitionCss: (enterTileClass) ->
+    _transitionCss: (animationClass) ->
       enterTileId = @$tiles.index(@$enterTile, @$exitTile) + 1
+
+      if animationClass?.indexOf '<' > 0
+        animationClass = if @_isNavigatingForward(enterTileId)
+          animationClass.replace '<', ''
+        else
+          animationClass.replace '<', ' reverse'
+        customReverse = true
 
       # determine the direction of animation
       #
-      if !@options.reverseSupport || @_isNavigatingForward(enterTileId)
+      if @_isNavigatingForward(enterTileId) || !@options.reverseSupport || !customReverse == true
         exitTileInitialState      = 'exit'
         exitTileInitialPosition   = 'start'
         exitTileFinalPosition     = 'end'
@@ -126,46 +140,41 @@
         enterTileInitialPosition  = 'end'
         enterTileFinalPosition    = 'start'
 
-
       # EXIT TILE
+      # set enter tile start position without any animations
       #
-      # reset
-      @$exitTile.attr 'class', "tiler-tile #{exitTileInitialState} #{enterTileClass}"
-
-      # set enter tile start position
-      # backup any transition data.  we need to set a start position without any animations
-      #
-      @$exitTile.data 'tilerTransition', @$exitTile.css('transition')
-      @$exitTile.data 'tilerTransitionDuration', @$exitTile.css('transition-duration')
-      @$exitTile.css 'transition-duration', 0
-      @$exitTile.addClass exitTileInitialPosition
       @$exitTile.css
-        transition: @$exitTile.data 'tilerTransition'
-        'transition-duration': @$exitTile.data 'tilerTransitionDuration'
+        'transition-property': 'none'
+        '-o-transition-property': 'none'
+        '-moz-transition-property': 'none'
+        '-webkit-transition-property': 'none'
+      @$exitTile.attr 'class', "tiler-tile #{exitTileInitialState} #{exitTileInitialPosition} #{animationClass}"
+      @$exitTile.css
+        'transition-duration': ''
+        '-o-transition-duration': ''
+        '-moz-transition-duration': ''
+        '-webkit-transition-duration': ''
 
       # trigger the end position
       @$exitTile.switchClass exitTileInitialPosition, exitTileFinalPosition
 
-
       # ENTER TILE
+      # set enter tile start position without any animations
       #
-
-      # reset
-      @$enterTile.attr 'class', "tiler-tile #{enterTileInitialState} #{enterTileClass}"
-
-      # set enter tile start position
-      # backup any transition data.  we need to set a start position without any animations
-      #
-      @$enterTile.data 'tilerTransition', @$enterTile.css('transition')
-      @$enterTile.data 'tilerTransitionDuration', @$enterTile.css('transition-duration')
-      @$enterTile.css 'transition-duration', 0
-      @$enterTile.addClass enterTileInitialPosition
       @$enterTile.css
-        transition: @$enterTile.data 'tilerTransition'
-        'transition-duration': @$enterTile.data 'tilerTransitionDuration'
+        'transition-property': 'none'
+        '-o-transition-property': 'none'
+        '-moz-transition-property': 'none'
+        '-webkit-transition-property': 'none'
+      @$enterTile.attr 'class', "tiler-tile #{enterTileInitialState} #{enterTileInitialPosition} #{animationClass}"
+      @$enterTile.css
+        'transition-duration': ''
+        '-o-transition-duration': ''
+        '-moz-transition-duration': ''
+        '-webkit-transition-duration': ''
 
       # trigger the end position
-      @$enterTile.addClass 'active'
+      enterTileFinalPosition = "#{enterTileFinalPosition} active"
       @$enterTile.switchClass enterTileInitialPosition, enterTileFinalPosition
 
     # find possible links throughout the entire page and set meta data on them

@@ -1,11 +1,12 @@
 <html>
   <head>
-    <title>tiler</title>
+    <title>Tiler Demo</title>
     <link type="text/css" rel="stylesheet" media="all" href="../lib/tiler.css"/>
     <link type="text/css" rel="stylesheet" media="all" href="../lib/tiler-animations.css"/>
     <link type="text/css" rel="stylesheet" media="all" href="tiler_demo.css"/>
   </head>
   <body>
+
     <div class="tiler-viewport" id="background">
       <div class="buttons">
         <h4>Background</h4>
@@ -25,34 +26,18 @@
 
     <div class="tiler-viewport" id="slide-horizontal">
       <div class="buttons">
-        <h4>Horizontal</h4>
+        <h4>Slide</h4>
         <button data-tiler-link="tile-1"></button>
         <button data-tiler-link="tile-2"></button>
         <button data-tiler-link="tile-3"></button>
         <button data-tiler-link="tile-4"></button>
       </div>
-      <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-active-class="slide-horizontal">
+      <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-animation="slide-horizontal">
         <span id="box-1"></span><span id="box-2"></span><span id="box-3"></span>
       </div>
-      <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-active-class="slide-horizontal"></div>
-      <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-active-class="slide-horizontal"></div>
-      <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-active-class="slide-horizontal"></div>
-    </div>
-
-    <div class="tiler-viewport" id="slide-vertical">
-      <div class="buttons">
-        <h4>Vertical</h4>
-        <button data-tiler-link="tile-1"></button>
-        <button data-tiler-link="tile-2"></button>
-        <button data-tiler-link="tile-3"></button>
-        <button data-tiler-link="tile-4"></button>
-      </div>
-      <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-active-class="slide-vertical">
-        <span id="box-1"></span><span id="box-2"></span><span id="box-3"></span>
-      </div>
-      <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-active-class="slide-vertical"></div>
-      <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-active-class="slide-vertical"></div>
-      <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-active-class="slide-vertical"></div>
+      <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-animation="slide-vertical"></div>
+      <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-animation="slide-horizontal"></div>
+      <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-animation="slide-vertical"></div>
     </div>
 
     <div class="tiler-viewport" id="fade">
@@ -63,18 +48,34 @@
         <button data-tiler-link="tile-3"></button>
         <button data-tiler-link="tile-4"></button>
       </div>
-      <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-active-class="fade">
+      <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-animation="fade<">
         <span id="box-1"></span><span id="box-2"></span><span id="box-3"></span>
       </div>
-      <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-active-class="fade"></div>
-      <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-active-class="fade"></div>
-      <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-active-class="fade"></div>
+      <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-animation="fade<"></div>
+      <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-animation="fade<"></div>
+      <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-animation="fade<"></div>
+    </div>
+
+    <div class="tiler-viewport" id="slide-vertical">
+      <div class="buttons">
+        <h4>Mixed</h4>
+        <button data-tiler-link="tile-1"></button>
+        <button data-tiler-link="tile-2"></button>
+        <button data-tiler-link="tile-3"></button>
+        <button data-tiler-link="tile-4"></button>
+      </div>
+      <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-animation="fade<">
+        <span id="box-1"></span><span id="box-2"></span><span id="box-3"></span>
+      </div>
+      <div class="tiler-tile" id="tile-2" data-tiler-title="Tile 2" data-tiler-animation="slide-vertical"></div>
+      <div class="tiler-tile" id="tile-3" data-tiler-title="Tile 3" data-tiler-animation="fade<"></div>
+      <div class="tiler-tile" id="tile-4" data-tiler-title="Tile 4" data-tiler-animation="slide-horizontal"></div>
     </div>
   </body>
 
-  <script src="../vendor/jquery/dist/jquery.js"></script>
-  <script src="../vendor/jquery-ui/ui/effect.js"></script>
-  <script src="../vendor/jquery-ui/ui/widget.js"></script>
+  <script type="text/javascript" src="../vendor/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="../vendor/jquery-ui/ui/effect.js"></script>
+  <script type="text/javascript" src="../vendor/jquery-ui/ui/widget.js"></script>
   <script type="text/javascript" src="../lib/tiler.js"></script>
   <script type="text/javascript" src="tiler_demo.js"></script>
 </html>

@@ -2,7 +2,7 @@ $ ->
 
   # initalize tiler
   $('.tiler-viewport').each ->
-    $(@).tiler().tiler('goTo', 1)
+    $(@).tiler().tiler('goTo', 1, false)
 
   # set the button text to match the tile title
   $('button[data-tiler-link]').each ->

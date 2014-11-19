@@ -1,28 +1,45 @@
 .tiler-tile {
-  transition-duration: 1s;
-  transition-property: left, top, opacity;
+  transition-duration: 25s;
   transition-timing-function: linear; }
-  .tiler-tile.slide-horizontal.enter.start {
-    left: 100%; }
-  .tiler-tile.slide-horizontal.enter.end {
-    left: 0%; }
-  .tiler-tile.slide-horizontal.exit.start {
-    left: 0%; }
-  .tiler-tile.slide-horizontal.exit.end {
-    left: -100%; }
-  .tiler-tile.slide-vertical.enter.start {
-    top: 100%; }
-  .tiler-tile.slide-vertical.enter.end {
-    top: 0%; }
-  .tiler-tile.slide-vertical.exit.start {
-    top: 0%; }
-  .tiler-tile.slide-vertical.exit.end {
-    top: -100%; }
-  .tiler-tile.fade.enter.start {
-    opacity: 0; }
-  .tiler-tile.fade.enter.end {
-    opacity: 1; }
-  .tiler-tile.fade.exit.start {
-    opacity: 1; }
-  .tiler-tile.fade.exit.end {
-    opacity: 1; }
+  .tiler-tile.slide-horizontal {
+    transition-property: left;
+    top: 0; }
+    .tiler-tile.slide-horizontal.enter.start {
+      left: 100%; }
+    .tiler-tile.slide-horizontal.enter.end {
+      left: 0%; }
+    .tiler-tile.slide-horizontal.exit.start {
+      left: 0%; }
+    .tiler-tile.slide-horizontal.exit.end {
+      left: -100%; }
+  .tiler-tile.slide-vertical {
+    transition-property: top;
+    left: 0; }
+    .tiler-tile.slide-vertical.enter.start {
+      top: 100%; }
+    .tiler-tile.slide-vertical.enter.end {
+      top: 0%; }
+    .tiler-tile.slide-vertical.exit.start {
+      top: 0%; }
+    .tiler-tile.slide-vertical.exit.end {
+      top: -100%; }
+  .tiler-tile.fade {
+    transition-property: opacity;
+    top: 0;
+    left: 0; }
+    .tiler-tile.fade.enter.start {
+      opacity: 0; }
+    .tiler-tile.fade.enter.end {
+      opacity: 1; }
+    .tiler-tile.fade.exit.start {
+      opacity: 1; }
+    .tiler-tile.fade.exit.end {
+      opacity: 1; }
+    .tiler-tile.fade.reverse.enter.start {
+      opacity: 1; }
+    .tiler-tile.fade.reverse.enter.end {
+      opacity: 1; }
+    .tiler-tile.fade.reverse.exit.start {
+      opacity: 1; }
+    .tiler-tile.fade.reverse.exit.end {
+      opacity: 0; }

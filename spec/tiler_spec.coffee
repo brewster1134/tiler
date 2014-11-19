@@ -21,17 +21,17 @@ describe 'Tiler', ->
         before ->
           $('#reverse-support').tiler
             reverseSupport: true
-          $('#reverse-support').tiler('goTo', 2)
-          $('#reverse-support').tiler('goTo', 1)
+          $('#reverse-support').tiler('goTo', 2, 'fade<')
+          $('#reverse-support').tiler('goTo', 1, 'fade<')
 
         it 'should set the reverse classes', ->
           expect($('#reverse-support #tile-1').hasClass('exit')).to.be.true
 
   describe 'goTo', ->
-    # eventSpy = null
-    eventSpy = sinon.spy()
+    eventSpy = null
 
     before ->
+      eventSpy = sinon.spy()
       $('#go-to').tiler()
       $('#go-to').tiler('goTo', 1)
 
@@ -63,25 +63,25 @@ describe 'Tiler', ->
         expect($('#go-to #tile-1').hasClass('foo-animation')).to.be.true
 
   describe 'refresh', ->
-    @newWidth = null
-    @newHeight = null
+    newWidth = null
+    newHeight = null
 
     before ->
       $('#refresh').tiler()
       $('#refresh').tiler('goTo', 'tile-2')
 
-      @newWidth = $('#refresh').outerWidth() / 2
-      @newHeight = $('#refresh').outerHeight() / 2
+      newWidth = $('#refresh').outerWidth() / 2
+      newHeight = $('#refresh').outerHeight() / 2
 
       $('#refresh').css
-        width: @newWidth
-        height: @newHeight
+        width: newWidth
+        height: newHeight
 
       $('#refresh').tiler('refresh')
 
     it 'should resize the tiles to match the viewport', ->
-      expect($('#refresh .tiler-tile').outerWidth()).to.equal @newWidth
-      expect($('#refresh .tiler-tile').outerHeight()).to.equal @newHeight
+      expect($('#refresh .tiler-tile').outerWidth()).to.equal newWidth
+      expect($('#refresh .tiler-tile').outerHeight()).to.equal newHeight
 
-    it 'should stay on the current tiles', ->
+    it 'should stay on the current tile', ->
       expect($('#refresh').attr('data-tiler-active-tile')).to.equal 'tile-2'

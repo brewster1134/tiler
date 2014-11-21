@@ -1,10 +1,17 @@
+=gpu
+  -webkit-transform: translate3d(0,0,0)
+  transform: translate3d(0,0,0)
+  -webkit-backface-visibility: hidden
+  backface-visibility: hidden
+  -webkit-perspective: 1000
+  perspective: 1000
+
 .tiler-viewport
   overflow: hidden
   position: relative
-  transform: translate3d(0,0,0)
 
   .tiler-tile
+    +gpu
     overflow: hidden
     position: absolute
     width: 100%
-    transform: translate3d(0,0,0)

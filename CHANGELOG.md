@@ -1,5 +1,8 @@
 #### CHANGE LOG
 
+###### 1.0.2
+* transition-property bugfix
+
 ###### 1.0.1
 * force gpu animations on tiler-tile elements
 

@@ -1,0 +1,11 @@
+---
+sources:
+  default: ~/Code/ruby/new-tasks
+name: Tiler
+version: 1.0.1
+tasks:
+  changelog:
+  git:
+    remotes:
+    - repo: origin
+      branch: master

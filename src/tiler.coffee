@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 1.0.0
+# * @version 1.0.2
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -44,7 +44,7 @@
     refresh: ->
       @_init()
       @element.trigger 'tiler.refresh'
-      @$enterTile.trigger 'tiler.refresh'
+      @$enterTile?.trigger 'tiler.refresh'
 
     goTo: (tile, animation) ->
       # find tile
@@ -129,7 +129,7 @@
 
         enterTileInitialState     = 'enter'
         enterTileInitialPosition  = 'start'
-        enterTileFinalPosition    = 'end'
+        enterTileFinalPosition    = 'end active'
 
       else
         exitTileInitialState      = 'enter'
@@ -138,43 +138,28 @@
 
         enterTileInitialState     = 'exit'
         enterTileInitialPosition  = 'end'
-        enterTileFinalPosition    = 'start'
+        enterTileFinalPosition    = 'start active'
 
-      # EXIT TILE
-      # set enter tile start position without any animations
-      #
-      @$exitTile.css
-        'transition-property': 'none'
-        '-o-transition-property': 'none'
-        '-moz-transition-property': 'none'
-        '-webkit-transition-property': 'none'
+      # setup tiles without animations
+      @$exitTile.add(@$enterTile).css
+        'transition-duration': '0'
+        '-o-transition-duration': '0'
+        '-moz-transition-duration': '0'
+        '-webkit-transition-duration': '0'
+
+      # add start state classes
       @$exitTile.attr 'class', "tiler-tile #{exitTileInitialState} #{exitTileInitialPosition} #{animationClass}"
-      @$exitTile.css
-        'transition-duration': ''
-        '-o-transition-duration': ''
-        '-moz-transition-duration': ''
-        '-webkit-transition-duration': ''
-
-      # trigger the end position
-      @$exitTile.switchClass exitTileInitialPosition, exitTileFinalPosition
-
-      # ENTER TILE
-      # set enter tile start position without any animations
-      #
-      @$enterTile.css
-        'transition-property': 'none'
-        '-o-transition-property': 'none'
-        '-moz-transition-property': 'none'
-        '-webkit-transition-property': 'none'
       @$enterTile.attr 'class', "tiler-tile #{enterTileInitialState} #{enterTileInitialPosition} #{animationClass}"
-      @$enterTile.css
+
+      # restore animation duration
+      @$exitTile.add(@$enterTile).css
         'transition-duration': ''
         '-o-transition-duration': ''
         '-moz-transition-duration': ''
         '-webkit-transition-duration': ''
 
-      # trigger the end position
-      enterTileFinalPosition = "#{enterTileFinalPosition} active"
+      # swap classes to animate
+      @$exitTile.switchClass exitTileInitialPosition, exitTileFinalPosition
       @$enterTile.switchClass enterTileInitialPosition, enterTileFinalPosition
 
     # find possible links throughout the entire page and set meta data on them

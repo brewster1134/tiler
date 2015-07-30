@@ -1,5 +1,8 @@
 #### CHANGE LOG
 
+###### 1.0.3
+* improved sizing of viewport
+
 ###### 1.0.2
 * transition-property bugfix
 

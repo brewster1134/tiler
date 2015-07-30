@@ -1,6 +1,7 @@
 .tiler-viewport {
-  overflow: hidden;
-  position: relative; }
+  position: relative;
+  background: white;
+  overflow: hidden; }
   .tiler-viewport .tiler-tile {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
@@ -8,6 +9,13 @@
     backface-visibility: hidden;
     -webkit-perspective: 1000;
     perspective: 1000;
-    overflow: hidden;
+    transition-duration: 0.25s;
     position: absolute;
-    width: 100%; }
+    overflow: hidden;
+    display: block;
+    width: 100%;
+    z-index: -1; }
+    .tiler-viewport .tiler-tile.enter {
+      z-index: 2; }
+    .tiler-viewport .tiler-tile.exit {
+      z-index: 1; }

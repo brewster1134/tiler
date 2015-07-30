@@ -7,11 +7,20 @@
   perspective: 1000
 
 .tiler-viewport
-  overflow: hidden
   position: relative
+  background: white
+  overflow: hidden
 
   .tiler-tile
     +gpu
-    overflow: hidden
+    transition-duration: 0.25s
     position: absolute
+    overflow: hidden
+    display: block
     width: 100%
+    z-index: -1
+
+    &.enter
+      z-index: 2
+    &.exit
+      z-index: 1

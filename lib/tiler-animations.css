@@ -1,5 +1,4 @@
 .tiler-tile {
-  transition-duration: 25s;
   transition-timing-function: linear; }
   .tiler-tile.slide-horizontal {
     transition-property: left;

@@ -3,10 +3,6 @@ describe 'Tiler', ->
     before ->
       $('#initialize').tiler()
 
-    it 'should size the tiles', ->
-      expect($('#initialize > .tiler-tile').css('width')).to.equal '200px'
-      expect($('#initialize > .tiler-tile').css('height')).to.equal '200px'
-
     it 'should not include tiles from nested tiler instances', ->
       expect($('#initialize > .tiler-tile').data 'tiler-viewport-id').to.equal 'initialize'
       expect($('#initialize-nested > .tiler-tile').data 'tiler-viewport-id').to.not.equal 'initialize'
@@ -16,7 +12,7 @@ describe 'Tiler', ->
         expect($('button').data('tiler-title')).to.equal 'Tile 1'
         expect($('button').data('tiler-foo')).to.equal 'Foo 1'
 
-    context 'with option', ->
+    context 'with options', ->
       describe 'reverseSupport', ->
         before ->
           $('#reverse-support').tiler
@@ -26,6 +22,27 @@ describe 'Tiler', ->
 
         it 'should set the reverse classes', ->
           expect($('#reverse-support #tile-1').hasClass('exit')).to.be.true
+
+    describe '_setupTiles', ->
+      context 'when viewport has a height', ->
+        before ->
+          $('#viewport-height').tiler()
+
+        it 'should match the tiles size to the viewport size', ->
+          expect($('#viewport-height .tiler-tile').outerWidth()).to.equal 321
+          expect($('#viewport-height .tiler-tile').outerHeight()).to.equal 123
+
+      context 'when tiles have a height', ->
+        before ->
+          $('#tile-height').tiler()
+
+        it 'should match the tiles size to the largest tile size', ->
+          # can't explain this. even though these get tested AFTER $.css sets width & height, the computed sizes don't reflect it right away
+          setTimeout ->
+            expect($('#tile-height #tile-1').outerWidth()).to.equal 432
+            expect($('#tile-height #tile-1').outerHeight()).to.equal 432
+            expect($('#tile-height #tile-2').outerWidth()).to.equal 432
+            expect($('#tile-height #tile-2').outerHeight()).to.equal 432
 
   describe 'goTo', ->
     eventSpy = null
@@ -69,19 +86,7 @@ describe 'Tiler', ->
     before ->
       $('#refresh').tiler()
       $('#refresh').tiler('goTo', 'tile-2')
-
-      newWidth = $('#refresh').outerWidth() / 2
-      newHeight = $('#refresh').outerHeight() / 2
-
-      $('#refresh').css
-        width: newWidth
-        height: newHeight
-
       $('#refresh').tiler('refresh')
-
-    it 'should resize the tiles to match the viewport', ->
-      expect($('#refresh .tiler-tile').outerWidth()).to.equal newWidth
-      expect($('#refresh .tiler-tile').outerHeight()).to.equal newHeight
 
     it 'should stay on the current tile', ->
       expect($('#refresh').attr('data-tiler-active-tile')).to.equal 'tile-2'

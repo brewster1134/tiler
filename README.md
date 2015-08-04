@@ -63,7 +63,7 @@ Tiler animations can be easily defined with a simple convention in your CSS.
 
   // animation attributes
   // -3- `no transition-property` defined at this level
-  transition-duration: 25s
+  transition-duration: 0.25s
   transition-timing-function: linear
 
   // slide left (slide in from the right)

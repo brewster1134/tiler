@@ -5,9 +5,9 @@ html, body {
   margin: 0; }
 
 .tiler-viewport {
-  float: left;
-  height: 50%;
-  width: 50%; }
+  height: 50vh;
+  width: 50vw;
+  float: left; }
   .tiler-viewport#background {
     transition-property: background-position;
     transition-timing-function: linear;

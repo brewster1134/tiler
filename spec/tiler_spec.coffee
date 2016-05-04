@@ -79,6 +79,25 @@ describe 'Tiler', ->
       it 'should add the active class', ->
         expect($('#go-to #tile-1').hasClass('foo-animation')).to.be.true
 
+    context 'when passing a boolean to active class', ->
+      before ->
+        $('#tile-1', '#go-to').data 'tiler-animation', 'goto-animate-1'
+        $('#tile-2', '#go-to').data 'tiler-animation', 'goto-animate-2'
+
+      context 'when passing true', ->
+        before ->
+          $('#go-to').tiler('goTo', 2, true)
+
+        it 'should add the active class from the first tile', ->
+          expect($('#go-to #tile-2').hasClass('goto-animate-2')).to.be.true
+
+      context 'when passing false', ->
+        before ->
+          $('#go-to').tiler('goTo', 1, false)
+
+        it 'should add the active class', ->
+          expect($('#go-to #tile-1').hasClass('no-active-class')).to.be.true
+
   describe 'refresh', ->
     newWidth = null
     newHeight = null

@@ -1,5 +1,8 @@
 #### CHANGE LOG
 
+###### 1.0.4
+* allow passing a boolean for `goTo` method's animation argument
+
 ###### 1.0.3
 * improved sizing of viewport
 

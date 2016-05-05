@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 1.0.3
+# * @version 1.0.4
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -45,7 +45,7 @@
       @element.trigger 'tiler.refresh'
       @$enterTile?.trigger 'tiler.refresh'
 
-    goTo: (tile, animation) ->
+    goTo: (tile, animation = true) ->
       # Find tile
       # Tile id as string
       $tile = if typeof tile == 'string'
@@ -70,14 +70,8 @@
       # Set the active tile id to the viewport
       @element.attr 'data-tiler-active-tile', @$enterTile.attr('id')
 
-      # Set tile class
-      animationClass = if animation == false
-        'no-active-class'
-      else
-        animation || @$enterTile.data('tiler-animation') || ''
-
       # Manage css classes if an one is specified
-      @_transitionCss animationClass
+      @_transitionCss @_getAnimationClass animation
 
       # Fire js events
       # Trigger on viewport
@@ -97,6 +91,16 @@
     #
     # PRIVATE METHODS
     #
+    _getAnimationClass: (animation) ->
+      # return explicitly passed animation
+      return animation if typeof animation == 'string'
+
+      # use animaton from markup if true, and no-active-class for false
+      if animation
+        @$enterTile.data('tiler-animation') || ''
+      else
+        'no-active-class'
+
     _transitionCss: (animationClass) ->
       enterTileId = @$tiles.index(@$enterTile, @$exitTile) + 1
 

@@ -10,7 +10,6 @@
 
 Define several `.tiler-tile` elements inside a single `.tiler-viewport` element.
 * `tiler-animation` is the class that will be toggled to allow CSS animations or styles.
-* If you use custom reverse styles, you need to signify that to tiler by appeneding a `<` to the class name __(example below)__
 
 _Do __NOT__ add any additional classes to the `tiler-tile` elements.  They __WILL__ be overwritten._
 
@@ -19,10 +18,6 @@ _Do __NOT__ add any additional classes to the `tiler-tile` elements.  They __WIL
 <div class="tiler-viewport">
   <div class="tiler-tile" data-tiler-animation="slide-horizontal" id="tile-1"></div>
   <div class="tiler-tile" data-tiler-animation="slide-vertical" id="tile-2"></div>
-
-  <!-- note the `less-than` sign in the animation name -->
-  <!-- that means this animation has a custom reverse defined -->
-  <div class="tiler-tile" data-tiler-animation="fade<" id="tile-2"></div>
 </div>
 ```
 
@@ -55,7 +50,7 @@ Tiler animations can be easily defined with a simple convention in your CSS.
 * `start` the beginning state of a CSS animation
   * This property is treated like a reset. If you use multiple animations, you need to make sure this property will reset ALL styles a given tile may be involved with.  For example if you animate using `top`, but you are defining a new animation that animates with `left`, you still need to set `top` to `0` in case it was set to something else from a _different_ animation. __<sup>example below -1-</sup>__
 * `end`   the end state of a CSS animation
-* `reverse` tiler can automatically reverse animations by switching using `start` as the `end` state, and vice-versa.  If you need to customize the reverse, you can nest additional animations under a `reverse` class.  __<sup>example below -2-</sup>__
+* `reverse` If you need to customize the reverse animation, you can nest additional animations under a `reverse` class.  __<sup>example below -2-</sup>__
 * Only define `transition-property` on the specific animations, and only for the specific attributes you are animating. __<sup>example below -3-</sup>__
 
 ```sass
@@ -85,6 +80,19 @@ Tiler animations can be easily defined with a simple convention in your CSS.
         left: 0%
       &.end
         left: -100%
+
+    // -2- reverse styles
+    &.reverse
+      &.enter
+        &.start
+          left: -100%
+        &.end
+          left: 0%
+      &.exit
+        &.start
+          left: 0%
+        &.end
+          left: 100%        
 
 // slide up (slide in from the bottom)
 &.slide-vertical
@@ -125,19 +133,6 @@ Tiler animations can be easily defined with a simple convention in your CSS.
       opacity: 1
     &.end
       opacity: 1
-
-  // -2- reverse styles for when using the `<` convention (e.g. `fade<`)
-  &.reverse
-    &.enter
-      &.start
-        opacity: 1
-      &.end
-        opacity: 1
-    &.exit
-      &.start
-        opacity: 1
-      &.end
-        opacity: 0
 ```
 
 ### Methods

@@ -1,5 +1,11 @@
 #### CHANGE LOG
 
+###### 2.0.0
+* new css api (now requires reverse class css for optional reverse support)
+* optimized animations
+* hardware-accelerated css animations
+* removed confusing reverse class convention
+
 ###### 1.0.4
 * allow passing a boolean for `goTo` method's animation argument
 

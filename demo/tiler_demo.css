@@ -16,15 +16,14 @@ html, body {
     background-position: 0% 100%;
     background-size: auto; }
     .tiler-viewport#background .tiler-tile {
-      background: transparent !important; }
+      background: transparent; }
   .tiler-viewport .buttons {
     position: absolute;
     z-index: 3;
     right: 0;
     top: 0; }
   .tiler-viewport .tiler-tile {
-    background-position: center;
-    transition-duration: 0.25s !important; }
+    background-position: center; }
     .tiler-viewport .tiler-tile#tile-1 {
       background-image: url(mountain.jpg); }
     .tiler-viewport .tiler-tile#tile-2 {

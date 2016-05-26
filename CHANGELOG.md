@@ -1,5 +1,8 @@
 #### CHANGE LOG
 
+###### 2.0.1
+* viewport sizing bugfix
+
 ###### 2.0.0
 * new css api (now requires reverse class css for optional reverse support)
 * optimized animations

@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 1.0.4
+# * @version 2.0.1
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -158,27 +158,16 @@
     #
     _setupTiles: ->
       self = @
-      tileWidths = [ @element.outerWidth() ]
-      tileHeights = [ @element.outerHeight() ]
-
-      # Remove any inline sizes from tiles
-      @$tiles.css
-        width: ''
-        height: ''
 
       # Loop through all tiles
       @$tiles.each ->
-        # Add natural dimensions
-        tileWidths.push $(@).outerWidth()
-        tileHeights.push $(@).outerHeight()
-
         # Add a data attribute with the viewport id
         $(@).attr 'data-tiler-viewport-id', self.element.attr('id')
 
       # Set sizes
       @element.add(@$tiles).css
-        width: Math.max tileWidths...
-        height: Math.max tileHeights...
+        width: @element.outerWidth()
+        height: @element.outerHeight()
 
     # Determine if we are advancing or retreating through our virtual tiles
     #

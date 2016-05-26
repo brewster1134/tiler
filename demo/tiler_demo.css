@@ -16,7 +16,7 @@ html, body {
     background-position: 0% 100%;
     background-size: auto; }
     .tiler-viewport#background .tiler-tile {
-      background: transparent; }
+      background: transparent !important; }
   .tiler-viewport .buttons {
     position: absolute;
     z-index: 3;

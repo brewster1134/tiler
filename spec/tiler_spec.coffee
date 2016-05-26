@@ -13,15 +13,15 @@ describe 'Tiler', ->
         expect($('button').data('tiler-foo')).to.equal 'Foo 1'
 
     context 'with options', ->
-      describe 'reverseSupport', ->
+      describe 'isReversible', ->
         before ->
           $('#reverse-support').tiler
-            reverseSupport: true
-          $('#reverse-support').tiler('goTo', 2, 'fade<')
-          $('#reverse-support').tiler('goTo', 1, 'fade<')
+            isReversible: true
+          $('#reverse-support').tiler('goTo', 2)
+          $('#reverse-support').tiler('goTo', 1)
 
         it 'should set the reverse classes', ->
-          expect($('#reverse-support #tile-1').hasClass('exit')).to.be.true
+          expect($('#reverse-support #tile-1').hasClass('reverse')).to.be.true
 
     describe '_setupTiles', ->
       context 'when viewport has a height', ->
@@ -90,13 +90,6 @@ describe 'Tiler', ->
 
         it 'should add the active class from the first tile', ->
           expect($('#go-to #tile-2').hasClass('goto-animate-2')).to.be.true
-
-      context 'when passing false', ->
-        before ->
-          $('#go-to').tiler('goTo', 1, false)
-
-        it 'should add the active class', ->
-          expect($('#go-to #tile-1').hasClass('no-active-class')).to.be.true
 
   describe 'refresh', ->
     newWidth = null

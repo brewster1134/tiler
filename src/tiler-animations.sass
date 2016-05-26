@@ -2,6 +2,7 @@
 //
 .tiler-tile
   transition-timing-function: linear
+  transition-duration: 0.25s
 
   // slide left (slide in from the right)
   &.slide-horizontal
@@ -18,6 +19,17 @@
         left: 0%
       &.end
         left: -100%
+    &.reverse
+      &.enter
+        &.start
+          left: -100%
+        &.end
+          left: 0%
+      &.exit
+        &.start
+          left: 0%
+        &.end
+          left: 100%
 
   // slide up (slide in from the bottom)
   &.slide-vertical
@@ -34,6 +46,17 @@
         top: 0%
       &.end
         top: -100%
+    &.reverse
+      &.enter
+        &.start
+          top: -100%
+        &.end
+          top: 0%
+      &.exit
+        &.start
+          top: 0%
+        &.end
+          top: 100%
 
   &.fade
     transition-property: opacity
@@ -50,14 +73,3 @@
         opacity: 1
       &.end
         opacity: 1
-    &.reverse
-      &.enter
-        &.start
-          opacity: 1
-        &.end
-          opacity: 1
-      &.exit
-        &.start
-          opacity: 1
-        &.end
-          opacity: 0

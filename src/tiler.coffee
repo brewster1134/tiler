@@ -27,13 +27,21 @@
     widgetEventPrefix: 'tiler'
     options:
       isReversible: true
+      startingActiveTile: 1
+      startingPreviousTile: 2
 
     _create: ->
-      @currentTileIndex = null
+      @currentActiveTileIndex = @options.startingActiveTile
+      @currentPreviousTileIndex = @options.startingPreviousTile
 
     _init: ->
+      @element.addClass 'animation-disabled'
+
       # Collect all the tiles, except for those nested inside another tiler instance
       @$tiles = $('.tiler-tile', @element).not(@element.find('.tiler-viewport .tiler-tile'))
+      @$enterTile = @$tiles.eq @currentActiveTileIndex - 1
+      @$exitTile = @$tiles.eq @currentPreviousTileIndex - 1
+
       @_setupTiles()
       @_setupLinks()
 
@@ -45,33 +53,35 @@
       @element.trigger 'tiler.refresh'
       @$enterTile?.trigger 'tiler.refresh'
 
-    goTo: (tile, animation = true) ->
-      # Find tile
-      # ...id as string
-      $tile = if typeof tile == 'string'
-        @$tiles.filter("##{tile}")
+    # Find tile with various values
+    #
+    _getTile: (tileValue) ->
+      # ...as a css ID (String)
+      if typeof tileValue == 'string'
+        $("##{tileValue}", @element)
 
       # ...as jquery object
-      else if tile?.jquery
-        tile?.jquery
+      else if tileValue.jquery
+        tileValue.jquery
 
       # ...as dom node
-      else if tile.nodeType
-        $(tile)
+      else if tileValue.nodeType
+        $(tileValue)
 
       # ...as index (starting at 1)
       else
-        @$tiles.eq tile - 1
+        @$tiles.eq tileValue - 1
+
+    goTo: (tile, animation) ->
+      # New active tile
+      @$enterTile = @_getTile tile
+      enterTileIndex = @$tiles.index @$enterTile
+      @$exitTile = @_getTile @currentActiveTileIndex + 1
 
       # Return if we are already on that tile
-      tileIndex = @$tiles.index $tile
-      return if !$tile.length || @currentTileIndex == tileIndex
+      return if !@$enterTile.length || @currentActiveTileIndex == enterTileIndex
 
-      # Get animating tiles
-      @$enterTile = $tile
-      @$exitTile = @$tiles.eq @currentTileIndex
-
-      @_transitionCss @_getAnimationClass animation
+      @_transitionCss @_getAnimationClass(), animation
 
       # Fire js events
       # ...on viewport
@@ -84,7 +94,8 @@
       @$exitTile.trigger 'tiler.exit'
 
       # Update the current tile id
-      @currentTileIndex = tileIndex
+      @currentActiveTileIndex = enterTileIndex
+      @currentPreviousTileIndex = @currentActiveTileIndex
       @element.attr 'data-tiler-active-tile', @$enterTile.attr('id')
 
       return @$enterTile
@@ -92,17 +103,17 @@
     #
     # PRIVATE METHODS
     #
-    _getAnimationClass: (animation) ->
-      # return explicitly passed animation
-      return animation if typeof animation == 'string'
+    _getAnimationClass: ->
+      @$enterTile.data('tiler-animation') || @element.data('tiler-animation') || ''
 
-      # use animation from markup if true, and no-active-class for false
-      if animation
-        @$enterTile.data('tiler-animation') || @element.data('tiler-animation') || ''
+    _transitionCss: (animationClass, animation) ->
+      animationClass = animation if typeof animation == 'string'
+
+      position = if animation == false
+        'end'
       else
-        ''
+        'start'
 
-    _transitionCss: (animationClass) ->
       enterTileIndex = @$tiles.index @$enterTile
 
       # Add reverse class if supported and navigating in reverse order (according to the dom)
@@ -115,8 +126,8 @@
       @element.addClass 'animation-disabled'
 
       # Build tile starting position animations classes
-      enterStartClass = "tiler-tile #{animationClass} active enter #{reverseClass} start"
-      exitStartClass = "tiler-tile #{animationClass} previous exit #{reverseClass} start"
+      enterStartClass = "tiler-tile #{animationClass} active enter #{reverseClass} #{position}"
+      exitStartClass = "tiler-tile #{animationClass} previous exit #{reverseClass} #{position}"
       otherTileClass = 'tiler-tile'
 
       # Set tile classes
@@ -125,13 +136,14 @@
       @$tiles.not(@$enterTile).not(@$exitTile).attr 'class', otherTileClass
 
       # setTimeout needed to give the browser time to repaint the tiles (if neccessary) with the animation starting position
-      setTimeout =>
-        # Enable transitions
-        @element.removeClass 'animation-disabled'
+      unless animation == false
+        setTimeout =>
+          # Enable transitions
+          @element.removeClass 'animation-disabled'
 
-        # Replace position classes to trigger animation
-        @$enterTile.add(@$exitTile).switchClass 'start', 'end'
-      , 10
+          # Replace position classes to trigger animation
+          @$enterTile.add(@$exitTile).switchClass 'start', 'end'
+        , 10
 
     # Find possible links throughout the entire page and set meta data on them
     #
@@ -164,6 +176,9 @@
         # Add a data attribute with the viewport id
         $(@).attr 'data-tiler-viewport-id', self.element.attr('id')
 
+        # Add animation class
+        $(@).addClass self._getAnimationClass(true)
+
       # Set sizes
       @element.add(@$tiles).css
         width: @element.outerWidth()
@@ -172,4 +187,4 @@
     # Determine if we are advancing or retreating through our virtual tiles
     #
     _isNavigatingForward: (enterTileIndex) ->
-      enterTileIndex > @currentTileIndex
+      enterTileIndex > @currentActiveTileIndex

@@ -32,18 +32,6 @@ describe 'Tiler', ->
           expect($('#viewport-height .tiler-tile').outerWidth()).to.equal 321
           expect($('#viewport-height .tiler-tile').outerHeight()).to.equal 123
 
-      context 'when tiles have a height', ->
-        before ->
-          $('#tile-height').tiler()
-
-        it 'should match the tiles size to the largest tile size', ->
-          # can't explain this. even though these get tested AFTER $.css sets width & height, the computed sizes don't reflect it right away
-          setTimeout ->
-            expect($('#tile-height #tile-1').outerWidth()).to.equal 432
-            expect($('#tile-height #tile-1').outerHeight()).to.equal 432
-            expect($('#tile-height #tile-2').outerWidth()).to.equal 432
-            expect($('#tile-height #tile-2').outerHeight()).to.equal 432
-
   describe 'goTo', ->
     eventSpy = null
 

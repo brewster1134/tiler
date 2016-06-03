@@ -2,16 +2,16 @@ $ ->
 
   # initalize tiler
   $('.tiler-viewport').each ->
-    $(@).tiler().tiler('goTo', 1, false)
+    $(@).tiler()
 
   # set the button text to match the tile title
   $('button[data-tiler-link]').each ->
-    $(@).text($(@).data('tiler-title'))
+    $(@).text $(@).data('tiler-title')
 
   # go to a tile on click based on the link id
   $('button').click ->
     tileId = $(@).data('tiler-link')
-    $(@).closest('.tiler-viewport').tiler('goTo', tileId)
+    $(@).closest('.tiler-viewport').tiler 'goTo', tileId
 
   # event to set background
   $('#background').on 'tiler.goto', (e, data) ->

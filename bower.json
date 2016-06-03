@@ -5,8 +5,10 @@
     "jquery-ui": "latest"
   },
   "devDependencies": {
-    "chai": "latest",
     "chai-as-promised": "latest",
+    "chai-jquery": "latest",
+    "chai": "latest",
+    "lolex": "sinonjs/lolex",
     "mocha": "latest",
     "sinon-chai": "latest",
     "sinon": "latest"

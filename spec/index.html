@@ -10,38 +10,73 @@
 
     <!-- initialize -->
     <div class="tiler-viewport" id="initialize">
-      <div class="tiler-tile">
+      <div class="tiler-tile" id="tile-initialize-1" data-tiler-animation="tile-initialize-1-animation" data-tiler-title="Tile Initialize 1 Title">
+
+        <!-- nested tiler instance -->
         <div class="tiler-viewport" id="initialize-nested">
-          <div class="tiler-tile"></div>
+          <div class="tiler-tile" id="tile-initialize-nested-1"></div>
         </div>
       </div>
-    </div>
-    <div class="tiler-viewport" id="viewport-height">
-      <div class="tiler-tile"></div>
+
+      <!-- link tile -->
+      <div class="tiler-tile" id="tile-initialize-2" data-tiler-animation="tile-initialize-2-animation" data-tiler-title="Tile Initialize 2 Title"></div>
     </div>
 
-    <!-- initialize : buildLinks-->
-    <button data-tiler-link="build-links:tile-1"></button>
-    <div class="tiler-viewport" id="build-links">
-      <div class="tiler-tile" id="tile-1" data-tiler-title="Tile 1" data-tiler-foo="Foo 1"></div>
-    </div>
+    <!-- link element -->
+    <button data-tiler-link="initialize:tile-initialize-2"></button>
 
-    <!-- initialize : options : isReversible -->
-    <div class="tiler-viewport" id="reverse-support">
-      <div class="tiler-tile" id="tile-1"></div>
-      <div class="tiler-tile" id="tile-2"></div>
+    <!-- option: activeTile -->
+    <div class="tiler-viewport" id="active-tile">
+      <div class="tiler-tile" id="tile-active-tile-1"></div>
+      <div class="tiler-tile" id="tile-active-tile-2"></div>
     </div>
 
     <!-- goTo -->
     <div class="tiler-viewport" id="go-to">
-      <div class="tiler-tile" id="tile-1"></div>
-      <div class="tiler-tile" id="tile-2"></div>
+      <div class="tiler-tile" id="tile-go-to-1" data-tiler-animation="tile-go-to-animation-1"></div>
+      <div class="tiler-tile" id="tile-go-to-2" data-tiler-animation="tile-go-to-animation-2"></div>
+    </div>
+
+    <!-- goTo: current tile -->
+    <div class="tiler-viewport" id="current-tile">
+      <div class="tiler-tile" id="tile-current-tile-1"></div>
+      <div class="tiler-tile" id="tile-current-tile-2"></div>
+    </div>
+
+    <!-- goTo: events -->
+    <div class="tiler-viewport" id="events">
+      <div class="tiler-tile" id="tile-events-1"></div>
+      <div class="tiler-tile" id="tile-events-2"></div>
+    </div>
+
+    <!-- goTo: option: isReversible -->
+    <div class="tiler-viewport" id="is-reversible">
+      <div class="tiler-tile" id="tile-is-reversible-1"></div>
+      <div class="tiler-tile" id="tile-is-reversible-2"></div>
+    </div>
+
+    <!-- goTo: custom animation -->
+    <div class="tiler-viewport" id="custom-animation">
+      <div class="tiler-tile" id="tile-custom-animation-1"></div>
+      <div class="tiler-tile" id="tile-custom-animation-2"></div>
+    </div>
+
+    <!-- goTo: animation true or undefined -->
+    <div class="tiler-viewport" id="animation-true-or-undefined">
+      <div class="tiler-tile" id="tile-animation-true-or-undefined-1" data-tiler-animation="tile-animation-true-or-undefined-animation-1"></div>
+      <div class="tiler-tile" id="tile-animation-true-or-undefined-2" data-tiler-animation="tile-animation-true-or-undefined-animation-2"></div>
+    </div>
+
+    <!-- goTo: animation false -->
+    <div class="tiler-viewport" id="animation-false">
+      <div class="tiler-tile" id="tile-animation-false-1"></div>
+      <div class="tiler-tile" id="tile-animation-false-2"></div>
     </div>
 
     <!-- refresh -->
     <div class="tiler-viewport" id="refresh">
-      <div class="tiler-tile" id="tile-1"></div>
-      <div class="tiler-tile" id="tile-2"></div>
+      <div class="tiler-tile" id="tile-refresh-1"></div>
+      <div class="tiler-tile" id="tile-refresh-2"></div>
     </div>
 
   </body>
@@ -52,26 +87,16 @@
   <script type="text/javascript" src="/vendor/jquery-ui/ui/widget.js"></script>
   <script type="text/javascript" src="/vendor/mocha/mocha.js"></script>
   <script type="text/javascript" src="/vendor/chai/chai.js"></script>
+  <script type="text/javascript" src="/vendor/chai-jquery/chai-jquery.js"></script>
 
   <!-- Sinon -->
+  <script type="text/javascript" src="/vendor/lolex/lolex.js"></script>
   <script type="text/javascript" src="/vendor/sinon/lib/sinon.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/util/core.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/extend.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/typeOf.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/times_in_words.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/spy.js"></script>
   <script type="text/javascript" src="/vendor/sinon/lib/sinon/call.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/behavior.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/stub.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/mock.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/collection.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/assert.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/sandbox.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/test.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/test_case.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/match.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/format.js"></script>
-  <script type="text/javascript" src="/vendor/sinon/lib/sinon/log_error.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/extend.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/spy.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/util/core.js"></script>
+  <script type="text/javascript" src="/vendor/sinon/lib/sinon/util/fake_timers.js"></script>
 
   <script type="text/javascript" src="/vendor/sinon-chai/lib/sinon-chai.js"></script>
   <script type="text/javascript" src="/testem.js"></script>

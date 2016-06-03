@@ -2,7 +2,7 @@
 (function() {
   $(function() {
     $('.tiler-viewport').each(function() {
-      return $(this).tiler().tiler('goTo', 1, false);
+      return $(this).tiler();
     });
     $('button[data-tiler-link]').each(function() {
       return $(this).text($(this).data('tiler-title'));

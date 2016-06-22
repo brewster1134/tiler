@@ -1,5 +1,9 @@
 #### CHANGE LOG
 
+###### 2.0.2
+* code refactor
+* added tests
+
 ###### 2.0.1
 * viewport sizing bugfix
 

@@ -164,6 +164,7 @@
       @$currentActiveTile.addClass 'active enter end'
 
       # Setup (fake) previous tile
+      return if @$currentPreviousTile[0] == @$currentActiveTile[0]
       @$currentPreviousTile.addClass 'previous exit end'
       @$currentPreviousTile.addClass 'reverse' if @options.isReversible
 

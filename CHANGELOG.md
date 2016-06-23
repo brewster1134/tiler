@@ -1,5 +1,8 @@
 #### CHANGE LOG
 
+###### 2.0.3
+* single tile support
+
 ###### 2.0.2
 * code refactor
 * added tests

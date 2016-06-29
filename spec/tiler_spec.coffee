@@ -77,8 +77,8 @@ describe 'Tiler', ->
         $tiler.tiler()
         $tiler.tiler 'goTo', 1, false
 
-      it 'should not fire events', ->
-        expect(currentTileViewportSpy).to.not.be.called
+      it 'should fire events', ->
+        expect(currentTileViewportSpy).to.be.called
 
       it 'should not update the tile classes', ->
         # tile 1

@@ -2,7 +2,7 @@
 # * tiler
 # * https://github.com/brewster1134/tiler
 # *
-# * @version 2.0.2
+# * @version 2.0.4
 # * @author Ryan Brewster
 # * Copyright (c) 2014
 # * Licensed under the MIT license.
@@ -47,13 +47,15 @@
     goTo: (tileValue, animation) ->
       # Get new active & previous tiles
       $enteringTile = @_getTile tileValue
+      return unless $enteringTile.length
       $exitingTile = @$currentActiveTile
 
-      # Return if we are already on that tile
-      return if !$enteringTile.length || $enteringTile[0] == @$currentActiveTile[0]
-
-      # Update css classes for animation
-      @_transitionCss $enteringTile, $exitingTile, animation
+      if $enteringTile[0] == @$currentActiveTile[0]
+        # Just finalize if we are already on the tile
+        @_finalizeNewTiles $enteringTile, $exitingTile
+      else
+        # Update css classes for animation
+        @_transitionCss $enteringTile, $exitingTile, animation
 
       return $enteringTile
 

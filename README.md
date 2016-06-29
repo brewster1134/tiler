@@ -208,7 +208,7 @@ npm install
 bower install
 ```
 
-Do **NOT** modify any `.js` files!  Modify the coffee files in the `src` directory.  Guard will watch for changes and compile them to the `lib` directory.
+Do **NOT** modify any `.js` files!  Modify the coffee files in the `src` directory.  Testem will watch for changes and compile them to the `lib` directory.
 
 ### Compiling & Testing
 Run `testem`

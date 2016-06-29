@@ -1,5 +1,8 @@
 #### CHANGE LOG
 
+###### 2.0.4
+* separated tiler events from transition
+
 ###### 2.0.3
 * single tile support
 

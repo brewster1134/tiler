@@ -1,5 +1,22 @@
 {
-  "scripts": {
-    "preinstall": "npm install -g bower coffee-script testem"
+  "name": "tiler",
+  "version": "2.0.6",
+  "license": "MIT",
+  "author": "Ryan Brewster <brewster1134@gmail.com>",
+  "repository": "git@github.com:brewster1134/tiler.git",
+  "dependencies": {
+    "jquery": "^3",
+    "jquery-ui": "^1"
+  },
+  "devDependencies": {
+    "chai": "^1",
+    "chai-as-promised": "^4",
+    "chai-jquery": "^2",
+    "coffeescript": "^2",
+    "lolex": "^3",
+    "mocha": "^1",
+    "sinon": "^1",
+    "sinon-chai": "^2",
+    "testem": "^2"
   }
 }
